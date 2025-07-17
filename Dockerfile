@@ -3,6 +3,7 @@ FROM php:8.4-fpm-alpine3.22 AS base_php
 
 # Set timezone
 ENV TZ=Asia/Tehran
+ARG WATCH_MODE=false
 
 # PHP modules
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -35,6 +36,12 @@ RUN apk update && apk add --no-cache \
     wget \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone \
     && rm -rf /var/cache/apk/*
+
+RUN if [ "$WATCH_MODE" = "true" ]; then \
+        apk add --no-cache nodejs npm \
+        && npm install --save-dev chokidar \
+        && rm -rf /var/cache/apk/*; \
+    fi
 
 ################## php_nginx ##################
 FROM base_php AS php_nginx
@@ -99,6 +106,7 @@ COPY .docker/scripts/setup-jwt.sh /opt/scripts/setup-jwt.sh
 COPY .docker/scripts/php-fpm.sh /opt/scripts/php-fpm.sh
 COPY .docker/scripts/nginx.sh /opt/scripts/nginx.sh
 COPY .docker/scripts/supervisord.sh /opt/scripts/supervisord.sh
+COPY .docker/supervisor/dev.conf /opt/supervisor/dev.conf
 COPY .docker/supervisor/web.conf /opt/supervisor/web.conf
 COPY .docker/supervisor/subscriber.conf /opt/supervisor/subscriber.conf
 COPY .docker/supervisor/scheduler.conf /opt/supervisor/scheduler.conf

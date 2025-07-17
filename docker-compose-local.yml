@@ -1,12 +1,16 @@
 services:
   ######################
   clinic:
+    build:
+      target: prod
+      args:
+        WATCH_MODE: true
     env_file:
       - .env
     command:
       - "--max_children=20"
       - "--request_terminate_timeout=30s"
-      - "--supervisor_config=/opt/supervisor/web.conf"
+      - "--supervisor_config=/opt/supervisor/dev.conf"
       - "--enable_ini=web-prod"
       - "--nginx_conf=dev.conf"
     ports:

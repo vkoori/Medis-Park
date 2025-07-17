@@ -1,8 +1,6 @@
 services:
   clinic:
     build:
-      context: .
-      dockerfile: Dockerfile
       target: prod
     environment:
       - TZ=Asia/Tehran
