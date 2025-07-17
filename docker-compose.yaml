@@ -1,0 +1,12 @@
+services:
+  clinic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    environment:
+      - TZ=Asia/Tehran
+    logging:
+        options:
+            max-size: 30m
+            max-file: 3
