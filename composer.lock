@@ -5941,16 +5941,16 @@
         },
         {
             "name": "vkoori/laravel-stateless-auth",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkoori/laravel-stateless-auth.git",
-                "reference": "a3e1bda564c53f69af882d470b4d5997525d89bf"
+                "reference": "7c850435dec42c36c3a63099978f766c8b896a43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vkoori/laravel-stateless-auth/zipball/a3e1bda564c53f69af882d470b4d5997525d89bf",
-                "reference": "a3e1bda564c53f69af882d470b4d5997525d89bf",
+                "url": "https://api.github.com/repos/vkoori/laravel-stateless-auth/zipball/7c850435dec42c36c3a63099978f766c8b896a43",
+                "reference": "7c850435dec42c36c3a63099978f766c8b896a43",
                 "shasum": ""
             },
             "require": {
@@ -5989,9 +5989,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vkoori/laravel-stateless-auth/issues",
-                "source": "https://github.com/vkoori/laravel-stateless-auth/tree/0.1.2"
+                "source": "https://github.com/vkoori/laravel-stateless-auth/tree/0.1.3"
             },
-            "time": "2025-07-18T16:09:21+00:00"
+            "time": "2025-07-18T17:46:18+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
