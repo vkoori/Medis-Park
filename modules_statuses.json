@@ -1,3 +1,9 @@
 {
-    "User": true
+    "User": true,
+    "Product": true,
+    "Reward": true,
+    "Coin": true,
+    "Order": true,
+    "Post": true,
+    "Media": true
 }
