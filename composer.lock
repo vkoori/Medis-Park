@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "581662e75c24ac5a3c783439440d4aae",
+    "content-hash": "3a8e0fb4deb7358dd7ff076b739e532c",
     "packages": [
         {
             "name": "brick/math",
@@ -6030,16 +6030,16 @@
         },
         {
             "name": "vkoori/laravel-stateless-auth",
-            "version": "0.1.3",
+            "version": "0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkoori/laravel-stateless-auth.git",
-                "reference": "7c850435dec42c36c3a63099978f766c8b896a43"
+                "reference": "e4c1c38fa4703b1389ee6b346199d5348fc6a199"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vkoori/laravel-stateless-auth/zipball/7c850435dec42c36c3a63099978f766c8b896a43",
-                "reference": "7c850435dec42c36c3a63099978f766c8b896a43",
+                "url": "https://api.github.com/repos/vkoori/laravel-stateless-auth/zipball/e4c1c38fa4703b1389ee6b346199d5348fc6a199",
+                "reference": "e4c1c38fa4703b1389ee6b346199d5348fc6a199",
                 "shasum": ""
             },
             "require": {
@@ -6078,9 +6078,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vkoori/laravel-stateless-auth/issues",
-                "source": "https://github.com/vkoori/laravel-stateless-auth/tree/0.1.3"
+                "source": "https://github.com/vkoori/laravel-stateless-auth/tree/0.1.6"
             },
-            "time": "2025-07-18T17:46:18+00:00"
+            "time": "2025-07-24T21:22:20+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
