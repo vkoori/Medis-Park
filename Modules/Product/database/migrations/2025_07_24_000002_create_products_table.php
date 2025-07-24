@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('title', 100);
             $table->text('description');
             $table->foreignId('media_id')->nullable()->constrained('medias')->restrictOnDelete()->restrictOnUpdate();
-            $table->unsignedInteger('coin_value');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();
         });
     }

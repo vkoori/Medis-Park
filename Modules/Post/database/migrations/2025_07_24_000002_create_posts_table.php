@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->text('content');
             $table->timestamp('available_at');
             $table->timestamp('expired_at');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();
             $table->index(['available_at', 'expired_at']);
         });
