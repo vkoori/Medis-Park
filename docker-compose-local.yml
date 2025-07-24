@@ -85,6 +85,38 @@ services:
       - minio-data:/data
     profiles:
       - infra
+  ######################
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    logging:
+      options:
+        max-size: "5m"
+        max-file: 1
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    depends_on:
+      - mariadb
+    profiles:
+      - gui
+  ######################
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    logging:
+      options:
+        max-size: "5m"
+        max-file: 1
+    ports:
+      - 8081:8081
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    depends_on:
+      - redis
+    profiles:
+      - gui
 
 # Volumes
 volumes:
