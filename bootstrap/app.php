@@ -10,6 +10,8 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Validation\UnauthorizedException;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
 use Vkoori\JwtAuth\Exceptions\BaseGuardException;
 use Vkoori\JwtAuth\Middlewares\JwtScopeMiddleware;
 use Vkoori\LaravelJwt\Exceptions\NonVerifyJwtException;
@@ -27,6 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
             NormalizeInputMiddleware::class,
         ])->alias([
             'jwt.scope' => JwtScopeMiddleware::class,
+            'permission' => PermissionMiddleware::class,
+            'role' => RoleMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -12,14 +12,18 @@ use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Reward\Models\RewardUserUnlock;
 use Modules\User\Enums\UserStatusEnum;
+use Spatie\Permission\Traits\HasRoles;
 use Vkoori\JwtAuth\Auth\Traits\HasApiTokens;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasApiTokens;
+    use HasRoles;
 
     protected ?string $jwtCacheDriver = 'redis_jwt';
+
+    protected $guard_name = 'api';
 
     protected $table = 'users';
 
