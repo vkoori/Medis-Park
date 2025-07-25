@@ -3,6 +3,7 @@
 namespace Modules\User\Services;
 
 use App\Traits\ClassResolver;
+use Modules\Notification\Notifications\OtpNotification;
 use Modules\User\Enums\UserStatusEnum;
 use Modules\User\Support\FormattedPhoneNumber;
 
@@ -21,6 +22,8 @@ class AuthService
             ]
         );
 
-        dd($user);
+        $user->notify(new OtpNotification(13456));
+
+        dd($user->status == UserStatusEnum::UNVERIFIED);
     }
 }

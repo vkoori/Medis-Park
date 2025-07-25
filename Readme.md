@@ -4,16 +4,16 @@ This is a modular Laravel application designed for high performance, security, a
 
 ## 📦 Features
 
-- 🧱 Modular Architecture: Built using nWidart/laravel-modules for a clean and maintainable module-based structure.
-- 🔐 Stateless Authentication: Powered by Koorosh for JWT-based auth with per-scope access and refresh tokens.
-- ✅ Authorization: Powered by Spatie Laravel Permission for role and permission management.
-- 🧼 XSS Protection: All HTML input sanitized using mews/purifier.
-- ⚡ High Performance: Enhanced with Laravel Octane for blazing-fast performance.
-- 🧵 Worker Services: Runs three separate services:
+- **🧱 Modular Architecture**: Built using *nWidart/laravel-modules* for a clean and maintainable module-based structure.
+- **🔐 Stateless Authentication**: Powered by *Koorosh* for JWT-based auth with per-scope access and refresh tokens.
+- **✅ Authorization**: Powered by *Spatie Laravel Permission* for role and permission management.
+- **🧼 XSS Protection**: All HTML input sanitized using *mews/purifier*.
+- **⚡ High Performance**: Enhanced with *Laravel Octane* for blazing-fast performance.
+- **🧵 Worker Services**: Runs three separate services:
   - HTTP Worker
   - Queue Consumer
   - Scheduler
-- 🗓️ Jalali Date Support: Integrated with `morilog/jalali` to handle Persian (Jalali) calendar dates across the application.
+- **🗓️ Jalali Date Support**: Integrated with *morilog/jalali* to handle Persian (Jalali) calendar dates across the application.
 
 ## 🐳 Getting Started
 
