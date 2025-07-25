@@ -11,6 +11,7 @@ use Modules\Coin\Models\CoinTransaction;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Reward\Models\RewardUserUnlock;
+use Modules\User\Casts\PhoneNumberCast;
 use Modules\User\Enums\UserStatusEnum;
 use Spatie\Permission\Traits\HasRoles;
 use Vkoori\JwtAuth\Auth\Traits\HasApiTokens;
@@ -33,6 +34,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
+        'mobile' => PhoneNumberCast::class,
         'status' => UserStatusEnum::class,
     ];
 
