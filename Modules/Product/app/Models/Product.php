@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Mews\Purifier\Casts\CleanHtml;
 use Modules\Media\Models\Media;
 use Modules\Reward\Models\RewardProduct;
 use Modules\User\Models\User;
@@ -19,6 +20,10 @@ class Product extends Model
         'description',
         'media_id',
         'updated_by',
+    ];
+
+    protected $casts = [
+        'description' => CleanHtml::class,
     ];
 
     public function media(): BelongsTo

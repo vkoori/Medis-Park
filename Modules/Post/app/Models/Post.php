@@ -5,6 +5,7 @@ namespace Modules\Post\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Mews\Purifier\Casts\CleanHtml;
 use Modules\Media\Models\Media;
 use Modules\User\Models\User;
 
@@ -22,6 +23,7 @@ class Post extends Model
     ];
 
     protected $casts = [
+        'content' => CleanHtml::class,
         'available_at' => 'datetime',
         'expired_at' => 'datetime',
     ];
