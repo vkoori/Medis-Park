@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Middleware\NormalizeInputMiddleware;
-use App\Http\Middleware\RawBodyMiddleware;
-use App\Http\Middleware\SetLocaleMiddleware;
+use App\Http\Middlewares\NormalizeInputMiddleware;
+use App\Http\Middlewares\RawBodyMiddleware;
+use App\Http\Middlewares\SetLocaleMiddleware;
 use App\Utils\Exceptions\ExceptionUtil;
 use App\Utils\Response\ErrorFacade;
 use Illuminate\Foundation\Application;
