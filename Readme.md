@@ -13,6 +13,7 @@ This is a modular Laravel application designed for high performance, security, a
   - HTTP Worker
   - Queue Consumer
   - Scheduler
+- 🗓️ Jalali Date Support: Integrated with `morilog/jalali` to handle Persian (Jalali) calendar dates across the application.
 
 ## 🐳 Getting Started
 
