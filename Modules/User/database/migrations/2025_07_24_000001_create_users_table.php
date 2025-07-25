@@ -10,7 +10,7 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('mobile', 16)->comment('E164');
+            $table->string('mobile', 16)->comment('E164')->unique();
             $table->enum('status', UserStatusEnum::values());
             $table->timestamps();
         });

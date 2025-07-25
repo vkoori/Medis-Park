@@ -13,8 +13,14 @@ use Modules\Post\Models\Post;
 use Modules\Reward\Models\RewardUserUnlock;
 use Modules\User\Casts\PhoneNumberCast;
 use Modules\User\Enums\UserStatusEnum;
+use Modules\User\Support\FormattedPhoneNumber;
 use Spatie\Permission\Traits\HasRoles;
 use Vkoori\JwtAuth\Auth\Traits\HasApiTokens;
+use Illuminate\Database\Eloquent\Builder;
+use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\NumberParseException;
 
 class User extends Authenticatable
 {
@@ -71,5 +77,36 @@ class User extends Authenticatable
     public function coinTransactions(): HasMany
     {
         return $this->hasMany(CoinTransaction::class);
+    }
+
+    public function scopeWhereMobile(
+        Builder $query,
+        string|PhoneNumber|FormattedPhoneNumber $mobileInput,
+        ?string $regionCode = null
+    ): Builder {
+        $phoneUtil = PhoneNumberUtil::getInstance();
+        $e164Mobile = null;
+        $phoneNumberObject = null;
+
+        try {
+            if ($mobileInput instanceof PhoneNumber) {
+                $phoneNumberObject = $mobileInput;
+            } elseif ($mobileInput instanceof FormattedPhoneNumber) {
+                $phoneNumberObject = $mobileInput->toRawPhoneNumber();
+            } else {
+                $effectiveRegionCode = $regionCode ?? 'IR';
+                $phoneNumberObject = $phoneUtil->parse($mobileInput, $effectiveRegionCode);
+            }
+
+            if ($phoneNumberObject) {
+                $e164Mobile = $phoneUtil->format($phoneNumberObject, PhoneNumberFormat::E164);
+            } else {
+                return $query->whereRaw('1 = 0');
+            }
+        } catch (NumberParseException $e) {
+            return $query->whereRaw('1 = 0');
+        }
+
+        return $query->where('mobile', $e164Mobile);
     }
 }
