@@ -24,3 +24,14 @@ Run following command and access to service at `http://localhost`
 ```
 docker compose -f docker-compose.yaml -f docker-compose-local.yml --profile infra --profile gui up -d
 ```
+
+Run following commands:
+
+```bash
+php artisan generate:jwt-keys RS256
+php artisan migrate
+php artisan db:seed
+php artisan module:seed Notification
+php artisan module:seed Reward
+php artisan queue:work --queue=sms_product,user,crm,reward
+```

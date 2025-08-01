@@ -9,22 +9,40 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Str;
+use Modules\Reward\Enums\ProfileLevelEnum;
 
 class RewardProfileJob implements ShouldQueue
 {
-    use Dispatchable;
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-    use ClassResolver;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, ClassResolver;
 
     public function __construct(private UserInfoUpdatedEvent $event) {}
 
     public function handle(): void
     {
-        dd(
-            'calc reward',
-            $this->event
-        );
+        $unlockedLevels = $this
+            ->getProfileRewardService()
+            ->getAchievementsOfProfile(userId: $this->event->getUserId())
+            ->pluck('level');
+
+        // Levels in descending order: LEVEL3 → LEVEL2 → LEVEL1
+        foreach ([ProfileLevelEnum::LEVEL3, ProfileLevelEnum::LEVEL2, ProfileLevelEnum::LEVEL1] as $level) {
+            if ($unlockedLevels->contains($level)) {
+                continue;
+            }
+
+            $fields = $this->getProfileRewardService()->getProfileFields(level: $level);
+            $incomplete = $fields->pluck('key')->filter(function ($field) {
+                $method = 'get' . Str::studly($field);
+                return empty($this->event->{$method}());
+            });
+
+            if ($incomplete->isEmpty()) {
+                $this->getProfileRewardService()->unlockProfile(
+                    level: $level,
+                    userId: $this->event->getUserId()
+                );
+            }
+        }
     }
 }

@@ -62,7 +62,7 @@ trait EnumContract
         return false;
     }
 
-    public static function translate(): array
+    public static function translates(): array
     {
         $result = [];
 
@@ -73,6 +73,13 @@ trait EnumContract
         }
 
         return $result;
+    }
+
+    public function translate(): array
+    {
+        $translation = self::getTranslation($this);
+
+        return self::formatEnumItem($this, $translation);
     }
 
     private static function getTranslation(\UnitEnum $item): string
@@ -110,7 +117,7 @@ trait EnumContract
     {
         return [
             'key' => $item->name,
-            'value' => $item->value,
+            'value' => $item->value ?? $item->name,
             'translate' => $translation,
         ];
     }

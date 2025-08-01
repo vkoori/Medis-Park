@@ -8,16 +8,16 @@ enum ProfileLevelEnum: string
 {
     use EnumContract;
 
-    case LEVEL1 = 'level1';
-    case LEVEL2 = 'level2';
-    case LEVEL3 = 'level3';
+    case LEVEL1 = 'level1'; // Gold
+    case LEVEL2 = 'level2'; // Silver
+    case LEVEL3 = 'level3'; // Bronze
 
     public function defaultReward(): int
     {
         return match ($this) {
-            self::LEVEL1 => 10,
+            self::LEVEL1 => 20,
             self::LEVEL2 => 14,
-            self::LEVEL3 => 20,
+            self::LEVEL3 => 10,
         };
     }
 }
