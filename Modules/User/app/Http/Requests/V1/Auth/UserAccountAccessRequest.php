@@ -18,7 +18,10 @@ class UserAccountAccessRequest extends FormRequest
     protected function passedValidation()
     {
         $this->merge([
-            'mobile' => PhoneNumberUtil::getInstance()->parse($this->mobile, 'IR'),
+            'mobile' => PhoneNumberUtil::getInstance()->parse(
+                numberToParse: $this->mobile,
+                defaultRegion: 'IR'
+            ),
         ]);
     }
 
@@ -27,7 +30,10 @@ class UserAccountAccessRequest extends FormRequest
         $data = parent::validated();
 
         $data['mobile'] = new FormattedPhoneNumber(
-            phoneNumber: PhoneNumberUtil::getInstance()->parse($data['mobile'], 'IR')
+            phoneNumber: PhoneNumberUtil::getInstance()->parse(
+                numberToParse: $data['mobile'],
+                defaultRegion: 'IR'
+            )
         );
 
         return is_null($key) ? $data : ($data[$key] ?? $default);

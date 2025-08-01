@@ -33,9 +33,19 @@ class FormattedPhoneNumber implements Stringable
         return $this->phoneNumber->getNationalNumber();
     }
 
-    public function formatNational(): string
+    public function formatE164(): string
     {
-        return $this->phoneUtil->format($this->phoneNumber, PhoneNumberFormat::NATIONAL);
+        return $this->phoneUtil->format($this->phoneNumber, PhoneNumberFormat::E164);
+    }
+
+    public function formatNational(bool $removeSpace = true): string
+    {
+        $phone = $this->phoneUtil->format($this->phoneNumber, PhoneNumberFormat::NATIONAL);
+        if ($removeSpace) {
+            $phone = str_replace(' ', '', $phone);
+        }
+
+        return $phone;
     }
 
     public function formatInternational(): string

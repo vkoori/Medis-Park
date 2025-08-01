@@ -8,13 +8,10 @@ use Modules\Notification\Models\SmsTemplate;
 
 class NotificationDatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $rows = [
-            SmsTemplateEnum::OTP->value => 'خوش آمدید\nکد ورود :code'
+            SmsTemplateEnum::OTP->value => 'کاربر عزیز، کد تایید شما: :code'
         ];
 
         foreach ($rows as $template => $content) {

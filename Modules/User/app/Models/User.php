@@ -28,7 +28,7 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasRoles;
 
-    protected ?string $jwtCacheDriver = 'redis_jwt';
+    public ?string $jwtCacheDriver = 'redis_jwt';
 
     protected $guard_name = 'api';
 

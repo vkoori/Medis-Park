@@ -181,4 +181,19 @@ abstract class BaseDto
 
         return $value;
     }
+
+    public function __serialize(): array
+    {
+        return $this->getProvidedData();
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->__construct();
+        foreach ($data as $key => $value) {
+            if (isset($this->publicProperties[$key])) {
+                $this->{$key} = $value;
+            }
+        }
+    }
 }

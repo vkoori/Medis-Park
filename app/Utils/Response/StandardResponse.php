@@ -13,9 +13,10 @@ class StandardResponse extends JsonResponse
 {
     public function __construct(
         int $statusCode = 200,
-        array|string $message = null,
+        null|array|string $message = null,
         array|string|JsonResource|Collection|Model|LengthAwarePaginator $data = [],
-        ?array $debug = null
+        ?array $debug = null,
+        int $code = 0
     ) {
         $failed = $statusCode >= 400 || $statusCode < 200 ? true : false;
         $data = $failed ? $data : $this->render($data);
@@ -40,7 +41,8 @@ class StandardResponse extends JsonResponse
                     ? ['additional' => key($additional) ? $additional : current($additional)]
                     : []
                 ),
-                'debug' => $debug
+                ...($failed ? ['code' => $code] : []),
+                ...($debug ? ['debug' => $debug] : []),
             ],
             status: $statusCode,
             headers: [
@@ -111,7 +113,7 @@ class StandardResponse extends JsonResponse
                     $tmp = $this->render($value);
                     $with += is_string($key) ? [$key => $tmp['with']] : $tmp['with'];
                     $additional += $tmp['additional'];
-                    if(is_array($data)) {
+                    if (is_array($data)) {
                         $res[$key] = $tmp['res'];
                     }
                 }

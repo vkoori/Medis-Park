@@ -6,5 +6,6 @@
     "Order": true,
     "Post": true,
     "Media": true,
-    "Notification": true
+    "Notification": true,
+    "Crm": true
 }

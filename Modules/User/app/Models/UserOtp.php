@@ -23,6 +23,7 @@ class UserOtp extends Model
     ];
 
     protected $casts = [
+        'otp_hash' => 'hashed',
         'used' => 'boolean',
         'expires_at' => 'datetime',
         'type' => OtpTypeEnum::class,

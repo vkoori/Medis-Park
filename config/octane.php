@@ -193,6 +193,12 @@ return [
         'routes',
         'composer.lock',
         '.env',
+        'Modules/**/app',
+        'Modules/**/config/**/*.php',
+        'Modules/**/database/**/*.php',
+        'Modules/**/resources/**/*.php',
+        'Modules/**/routes',
+        'Modules/**/composer.lock',
     ],
 
     /*

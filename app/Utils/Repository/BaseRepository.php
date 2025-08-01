@@ -2,7 +2,7 @@
 
 namespace App\Utils\Repository;
 
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -110,7 +110,7 @@ abstract class BaseRepository
     public function batchInsert(array $values): bool
     {
         if ($this->getModel()->timestamps) {
-            $now = Carbon::now();
+            $now = Date::now();
             foreach ($values as &$value) {
                 if ($this->getModel()->getCreatedAtColumn()) {
                     $value[$this->getModel()->getCreatedAtColumn()] = $now;

@@ -2,7 +2,9 @@
 
 namespace Modules\User\Providers;
 
+use App\Dto\UserInfoUpdatedEvent;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Modules\User\Listeners\HandleUserInfoUpdate;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,11 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+        UserInfoUpdatedEvent::class => [
+            HandleUserInfoUpdate::class,
+        ],
+    ];
 
     /**
      * Indicates if events should be discovered.

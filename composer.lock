@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91050e426a5dca90be123b5a507843b5",
+    "content-hash": "8c1db3890c4d3281c00a7fdce5506517",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -6824,16 +6824,16 @@
         },
         {
             "name": "vkoori/laravel-stateless-auth",
-            "version": "0.1.7",
+            "version": "0.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkoori/laravel-stateless-auth.git",
-                "reference": "60c7298c8c531a222774ec6b3535562b60598a76"
+                "reference": "4bdc612a87bef663c27a7bd48f026c4add2dd1b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vkoori/laravel-stateless-auth/zipball/60c7298c8c531a222774ec6b3535562b60598a76",
-                "reference": "60c7298c8c531a222774ec6b3535562b60598a76",
+                "url": "https://api.github.com/repos/vkoori/laravel-stateless-auth/zipball/4bdc612a87bef663c27a7bd48f026c4add2dd1b6",
+                "reference": "4bdc612a87bef663c27a7bd48f026c4add2dd1b6",
                 "shasum": ""
             },
             "require": {
@@ -6872,9 +6872,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vkoori/laravel-stateless-auth/issues",
-                "source": "https://github.com/vkoori/laravel-stateless-auth/tree/0.1.7"
+                "source": "https://github.com/vkoori/laravel-stateless-auth/tree/0.1.10"
             },
-            "time": "2025-07-24T23:55:35+00:00"
+            "time": "2025-07-31T15:42:29+00:00"
         },
         {
             "name": "vladimir-yuldashev/laravel-queue-rabbitmq",
