@@ -4,8 +4,8 @@ namespace Modules\Reward\Services;
 
 use App\Traits\ClassResolver;
 use Illuminate\Support\Facades\DB;
-use Modules\Coin\Enums\TransactionReferenceTypeEnum;
 use Modules\Reward\Enums\ProfileLevelEnum;
+use Modules\Coin\Enums\TransactionReferenceTypeEnum;
 
 class ProfileRewardService
 {
@@ -13,7 +13,7 @@ class ProfileRewardService
 
     public function getProfileFields(ProfileLevelEnum $level)
     {
-        return $this->getRewardProfileRepository()->get(conditions: ['level' => $level]);
+        return $this->getProfileFieldRepository()->get(conditions: ['level' => $level]);
     }
 
     public function getAchievementsOfProfile(int $userId)
@@ -39,7 +39,7 @@ class ProfileRewardService
                 userId: $userId,
                 amount: $profileReward->amount,
                 reason: __(key: "reward::messages.reward_reason.profile", replace: [
-                    'level' => $level->translate()
+                    'level' => $level->translate()['translate']
                 ]),
                 type: TransactionReferenceTypeEnum::REWARD_UNLOCKED,
                 referenceId: $userAchievement->id

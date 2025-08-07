@@ -25,8 +25,8 @@ class RewardProfileJob implements ShouldQueue
             ->getAchievementsOfProfile(userId: $this->event->getUserId())
             ->pluck('level');
 
-        // Levels in descending order: LEVEL3 → LEVEL2 → LEVEL1
-        foreach ([ProfileLevelEnum::LEVEL3, ProfileLevelEnum::LEVEL2, ProfileLevelEnum::LEVEL1] as $level) {
+        // Levels in descending order: BRONZE → SILVER → GOLD
+        foreach ([ProfileLevelEnum::BRONZE, ProfileLevelEnum::SILVER, ProfileLevelEnum::GOLD] as $level) {
             if ($unlockedLevels->contains($level)) {
                 continue;
             }

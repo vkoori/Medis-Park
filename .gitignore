@@ -25,3 +25,4 @@ Thumbs.db
 /storage/jwt
 supervisord.log
 supervisord.production
+supervisord.pid

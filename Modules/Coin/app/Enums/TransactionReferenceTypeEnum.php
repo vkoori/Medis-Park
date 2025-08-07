@@ -8,7 +8,7 @@ enum TransactionReferenceTypeEnum: string
 {
     use EnumContract;
 
-    case UNLOCKED_REWARD = 'unlocked_reward';
+    case REWARD_UNLOCKED = 'reward_unlocked';
     case ORDER = 'order';
     case CRM = 'crm';
 }

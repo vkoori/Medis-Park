@@ -86,13 +86,14 @@ trait EnumContract
     {
         $enumName = strtolower($item->name);
         $fullClassName = explode('\\', get_class($item));
-        $isModule = $fullClassName[0] === 'Modules';
+        $isModule = $fullClassName[0] === config('modules.namespace');
         $className = Str::camel(end($fullClassName));
+        $moduleName = strtolower($fullClassName[1]);
 
         $translationKeys = [
             'module' => $isModule ? [
-                'classKey' => "{$fullClassName[1]}::enum.{$className}.{$enumName}",
-                'key' => "{$fullClassName[1]}::enum.{$enumName}",
+                'classKey' => "{$moduleName}::enum.{$className}.{$enumName}",
+                'key' => "{$moduleName}::enum.{$enumName}",
             ] : [],
             'default' => [
                 'classKey' => "enum.{$className}.{$enumName}",

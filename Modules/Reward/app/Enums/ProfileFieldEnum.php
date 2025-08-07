@@ -15,9 +15,9 @@ enum ProfileFieldEnum: string
     public function defaultLevel(): ProfileLevelEnum
     {
         return match ($this) {
-            self::FIRST_NAME => ProfileLevelEnum::LEVEL3,
-            self::LAST_NAME => ProfileLevelEnum::LEVEL2,
-            self::NATIONAL_CODE => ProfileLevelEnum::LEVEL1,
+            self::FIRST_NAME => ProfileLevelEnum::BRONZE,
+            self::LAST_NAME => ProfileLevelEnum::SILVER,
+            self::NATIONAL_CODE => ProfileLevelEnum::GOLD,
         };
     }
 }
