@@ -61,5 +61,9 @@ class RouteServiceProvider extends ServiceProvider
             ->prefix('api/v1/admin/user/')
             ->name('api.v1.admin.user.')
             ->group(module_path($this->name, '/routes/v1/admin.php'));
+        Route::middleware(['api', 'jwt.scope'])
+            ->prefix('api/v1/member/user/')
+            ->name('api.v1.member.user.')
+            ->group(module_path($this->name, '/routes/v1/member.php'));
     }
 }

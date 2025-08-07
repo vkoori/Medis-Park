@@ -155,6 +155,11 @@ class AuthService
         return ['scope' => 'customer'] + $jwt;
     }
 
+    public function logout(string $currentToken, User $user)
+    {
+        return $user->revokeToken(token: $currentToken);
+    }
+
     protected function sendOtp(User $user, OtpTypeEnum $type): void
     {
         $activeOtp = $this->getUserOtpRepository()->findActiveOtp(
