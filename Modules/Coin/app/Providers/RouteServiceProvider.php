@@ -46,16 +46,16 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes(): void
     {
         Route::middleware('api')
-            ->prefix('api/v1/general/user/')
-            ->name('api.v1.general.user.')
+            ->prefix('api/v1/general/coin/')
+            ->name('api.v1.general.coin.')
             ->group(module_path($this->name, '/routes/v1/general.php'));
         Route::middleware(['api', 'jwt.scope:customer'])
-            ->prefix('api/v1/customer/user/')
-            ->name('api.v1.customer.user.')
+            ->prefix('api/v1/customer/coin/')
+            ->name('api.v1.customer.coin.')
             ->group(module_path($this->name, '/routes/v1/customer.php'));
         Route::middleware(['api', 'jwt.scope:admin'])
-            ->prefix('api/v1/admin/user/')
-            ->name('api.v1.admin.user.')
+            ->prefix('api/v1/admin/coin/')
+            ->name('api.v1.admin.coin.')
             ->group(module_path($this->name, '/routes/v1/admin.php'));
     }
 }

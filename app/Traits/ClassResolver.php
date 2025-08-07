@@ -2,16 +2,18 @@
 
 namespace App\Traits;
 
-use Modules\Coin\Repositories\CoinTransactionRepository;
-use Modules\Coin\Services\CoinTransactionService;
 use Modules\Crm\Services\CrmService;
-use Modules\Reward\Repositories\ProfileFieldRepository;
-use Modules\Reward\Repositories\RewardProfileRepository;
-use Modules\Reward\Repositories\RewardUserUnlockedRepository;
+use Modules\Media\Services\MediaService;
+use Modules\User\Repositories\UserRepository;
+use Modules\Media\Repositories\MediaRepository;
+use Modules\User\Repositories\UserOtpRepository;
+use Modules\Coin\Services\CoinTransactionService;
 use Modules\Reward\Services\ProfileRewardService;
 use Modules\User\Repositories\UserInfoRepository;
-use Modules\User\Repositories\UserOtpRepository;
-use Modules\User\Repositories\UserRepository;
+use Modules\Reward\Repositories\ProfileFieldRepository;
+use Modules\Coin\Repositories\CoinTransactionRepository;
+use Modules\Reward\Repositories\RewardProfileRepository;
+use Modules\Reward\Repositories\RewardUserUnlockedRepository;
 
 trait ClassResolver
 {
@@ -44,6 +46,10 @@ trait ClassResolver
     {
         return app(CoinTransactionRepository::class);
     }
+    protected function getMediaRepository(): MediaRepository
+    {
+        return app(MediaRepository::class);
+    }
     // Services
     protected function getCrmService(): CrmService
     {
@@ -56,5 +62,9 @@ trait ClassResolver
     protected function getCoinTransactionService(): CoinTransactionService
     {
         return app(CoinTransactionService::class);
+    }
+    protected function getMediaService(): MediaService
+    {
+        return app(MediaService::class);
     }
 }
