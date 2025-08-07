@@ -24,4 +24,12 @@ class AuthExceptions
             code: HttpExceptionCodes::INVALID_OTP_CODE
         );
     }
+
+    public static function forbiddenForNonAdmin(): HttpException
+    {
+        return new HttpException(
+            statusCode: 403,
+            messageBag: __('user::exceptions.forbidden_for_non_admin')
+        );
+    }
 }

@@ -10,5 +10,8 @@ set -e
 # Reconfigure nginx
 /opt/scripts/nginx.sh "$@"
 
+# Laravel commands
+/opt/scripts/laravel.sh
+
 # Start supervisor
 /opt/scripts/supervisord.sh "$@"

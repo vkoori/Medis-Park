@@ -8,14 +8,14 @@ enum OtpTypeEnum: string
 {
     use EnumContract;
 
-    case LOGIN = 'login';
-    case PASSWORD_RESET = 'password_reset';
+    case LOGIN_CUSTOMER = 'login_customer';
+    case LOGIN_ADMIN = 'login_admin';
 
     public function expirationSeconds(): int
     {
         return match ($this) {
-            self::LOGIN => 120,
-            self::PASSWORD_RESET => 180,
+            self::LOGIN_CUSTOMER => 120,
+            self::LOGIN_ADMIN => 60,
             default => 120,
         };
     }

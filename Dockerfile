@@ -105,6 +105,7 @@ COPY .docker/scripts/entrypoint.sh /opt/scripts/entrypoint.sh
 COPY .docker/scripts/setup-jwt.sh /opt/scripts/setup-jwt.sh
 COPY .docker/scripts/php-fpm.sh /opt/scripts/php-fpm.sh
 COPY .docker/scripts/nginx.sh /opt/scripts/nginx.sh
+COPY .docker/scripts/laravel.sh /opt/scripts/laravel.sh
 COPY .docker/scripts/supervisord.sh /opt/scripts/supervisord.sh
 COPY .docker/supervisor/dev.conf /opt/supervisor/dev.conf
 COPY .docker/supervisor/web.conf /opt/supervisor/web.conf

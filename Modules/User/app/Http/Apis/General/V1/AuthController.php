@@ -11,7 +11,7 @@ use Modules\User\Services\AuthService;
 
 class AuthController
 {
-    public function getAccess(UserAccountAccessRequest $request, AuthService $authService)
+    public function customerAccess(UserAccountAccessRequest $request, AuthService $authService)
     {
         $user = $authService->findOrCreateUnverifiedUser(
             mobile: $request->validated('mobile')
@@ -23,9 +23,32 @@ class AuthController
         );
     }
 
-    public function checkOtp(CheckOtpRequest $request, AuthService $authService)
+    public function customerOtp(CheckOtpRequest $request, AuthService $authService)
     {
         $jwt = $authService->loginCustomerByOtp(
+            userId: $request->validated('user_id'),
+            otp: $request->validated('otp'),
+            issuer: $request->validated('issuer')
+        );
+
+        return SuccessFacade::ok(data: $jwt);
+    }
+
+    public function adminAccess(UserAccountAccessRequest $request, AuthService $authService)
+    {
+        $user = $authService->findAdmin(
+            mobile: $request->validated('mobile')
+        );
+
+        return SuccessFacade::ok(
+            message: __('user::messages.otp_sent'),
+            data: UserResource::make($user)
+        );
+    }
+
+    public function adminOtp(CheckOtpRequest $request, AuthService $authService)
+    {
+        $jwt = $authService->loginAdminByOtp(
             userId: $request->validated('user_id'),
             otp: $request->validated('otp'),
             issuer: $request->validated('issuer')

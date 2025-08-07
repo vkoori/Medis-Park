@@ -48,7 +48,7 @@ class AuthService
             }
         }
 
-        $this->sendOtp(user: $user, type: OtpTypeEnum::LOGIN);
+        $this->sendOtp(user: $user, type: OtpTypeEnum::LOGIN_CUSTOMER);
 
         return $user;
     }
@@ -58,7 +58,7 @@ class AuthService
         [$activeOtp, $user] = Octane::concurrently(tasks: [
             fn(): ?UserOtp => $this->getUserOtpRepository()->findActiveOtp(
                 userId: $userId,
-                type: OtpTypeEnum::LOGIN,
+                type: OtpTypeEnum::LOGIN_CUSTOMER,
             ),
             fn(): User => $this->getUserRepository()->findByIdOrFail(
                 modelId: $userId
@@ -91,6 +91,52 @@ class AuthService
             UserStatusEnum::REGISTERED => 'customer',
             default => throw new NotImplementedException()
         };
+        $jwt = $user->accessToken(issuer: $issuer, scopes: [$scope]);
+
+        return ['scope' => $scope] + $jwt;
+    }
+
+    public function findAdmin(FormattedPhoneNumber $mobile): User
+    {
+        $user = $this->getUserRepository()->first(conditions: [
+            'mobile' => $mobile
+        ]);
+        $permissions = $user?->getAllPermissions();
+
+        if (!$permissions || $permissions->isEmpty()) {
+            throw AuthExceptions::forbiddenForNonAdmin();
+        }
+
+        $this->sendOtp(user: $user, type: OtpTypeEnum::LOGIN_ADMIN);
+
+        return $user;
+    }
+
+    public function loginAdminByOtp(int $userId, string $otp, string $issuer): array
+    {
+        [$activeOtp, $user] = Octane::concurrently(tasks: [
+            fn(): ?UserOtp => $this->getUserOtpRepository()->findActiveOtp(
+                userId: $userId,
+                type: OtpTypeEnum::LOGIN_ADMIN,
+            ),
+            fn(): User => $this->getUserRepository()->findByIdOrFail(
+                modelId: $userId
+            ),
+        ]);
+
+        if (!$activeOtp) {
+            throw AuthExceptions::expiredOtp();
+        }
+        if (!Hash::check(value: $otp, hashedValue: $activeOtp->otp_hash)) {
+            throw AuthExceptions::invalidOtp();
+        }
+
+        $this->getUserOtpRepository()->batchUpdate(
+            conditions: ['id' => $activeOtp->id],
+            values: ['used' => true]
+        );
+
+        $scope = 'admin';
         $jwt = $user->accessToken(issuer: $issuer, scopes: [$scope]);
 
         return ['scope' => $scope] + $jwt;
