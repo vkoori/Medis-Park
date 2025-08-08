@@ -3,6 +3,7 @@
 namespace Modules\Post\Models;
 
 use App\Traits\Paginatable;
+use Modules\Post\Enums\UserPostVisitEnum;
 use Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,13 @@ class UserPostVisit extends Model
     protected $fillable = [
         'user_id',
         'post_id',
+        'type',
+        'calendar_day'
+    ];
+
+    protected $casts = [
+        'type' => UserPostVisitEnum::class,
+        'calendar_day' => 'date'
     ];
 
     public function user(): BelongsTo

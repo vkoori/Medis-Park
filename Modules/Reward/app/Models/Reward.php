@@ -40,6 +40,7 @@ class Reward extends Model
             RewardTypeEnum::MONTHLY_COIN->value => RewardCoin::class,
             RewardTypeEnum::MONTHLY_PRODUCT->value => RewardProduct::class,
             RewardTypeEnum::PROFILE->value => RewardProfile::class,
+            RewardTypeEnum::UNLOCK_POST->value => RewardPost::class,
         ]);
     }
 

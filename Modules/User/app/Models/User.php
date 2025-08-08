@@ -2,31 +2,31 @@
 
 namespace Modules\User\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Modules\Coin\Models\CoinTransaction;
-use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
-use Modules\Reward\Models\RewardUserUnlock;
-use Modules\User\Casts\PhoneNumberCast;
-use Modules\User\Enums\UserStatusEnum;
-use Modules\User\Support\FormattedPhoneNumber;
-use Spatie\Permission\Traits\HasRoles;
-use Vkoori\JwtAuth\Auth\Traits\HasApiTokens;
-use Illuminate\Database\Eloquent\Builder;
 use libphonenumber\PhoneNumber;
+use Modules\Order\Models\Order;
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
+use Modules\User\Enums\UserStatusEnum;
+use Spatie\Permission\Traits\HasRoles;
+use Modules\User\Casts\PhoneNumberCast;
+use Illuminate\Notifications\Notifiable;
 use libphonenumber\NumberParseException;
+use Modules\Coin\Models\CoinTransaction;
+use Illuminate\Database\Eloquent\Builder;
+use Modules\Reward\Models\RewardUserUnlock;
+use Vkoori\JwtAuth\Auth\Traits\HasApiTokens;
+use Modules\User\Support\FormattedPhoneNumber;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use Notifiable;
     use HasApiTokens;
-    use HasRoles;
 
     public ?string $jwtCacheDriver = 'redis_jwt';
 

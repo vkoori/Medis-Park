@@ -7,8 +7,8 @@ use Modules\User\Models\User;
 use Modules\Media\Models\Media;
 use Mews\Purifier\Casts\CleanHtml;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
@@ -41,13 +41,8 @@ class Post extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public function visitors(): BelongsToMany
+    public function seen(): HasMany
     {
-        return $this->belongsToMany(
-            User::class,
-            'user_post_visits',
-            'post_id',
-            'user_id'
-        )->withPivot('first_visited_at');
+        return $this->hasMany(UserPostVisit::class);
     }
 }

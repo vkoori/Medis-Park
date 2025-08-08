@@ -3,9 +3,9 @@
 namespace Modules\User\Listeners;
 
 use App\Dto\UserInfoUpdatedEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\Crm\Jobs\CrmUpdateUserJob;
 use Modules\Reward\Jobs\RewardProfileJob;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class HandleUserInfoUpdate implements ShouldQueue
 {

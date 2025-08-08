@@ -10,6 +10,7 @@ class RewardDatabaseSeeder extends Seeder
     {
         $this->call([
             ProfileRewardSeeder::class,
+            PostRewardSeeder::class,
         ]);
     }
 }
