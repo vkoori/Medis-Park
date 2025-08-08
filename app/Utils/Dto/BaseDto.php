@@ -2,11 +2,12 @@
 
 namespace App\Utils\Dto;
 
-use Illuminate\Support\Str;
+use Carbon\Carbon;
 use ReflectionClass;
 use ReflectionProperty;
 use ReflectionUnionType;
-use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -147,7 +148,7 @@ abstract class BaseDto
             in_array('callable', $types) && is_callable($value) => $value,
             in_array('enum', $types) && (ltrim((string)$type, '?'))::tryFrom($value) !== null => (ltrim((string)$type, '?'))::from($value),
             in_array('dto', $types) && is_array($value) => (ltrim((string)$type, '?'))::fromArray($value),
-            in_array('carbon', $types) && is_array($value) => (ltrim((string)$type, '?'))::parse($value),
+            in_array('carbon', $types) && is_string($value) => Date::parse($value),
             in_array('carbon', $types) && $value instanceof Carbon => $value,
             in_array('uploadedFile', $types) && $value instanceof uploadedFile => $value,
             default => throw new \InvalidArgumentException("Invalid type for property {$property->getName()}"),

@@ -2,12 +2,15 @@
 
 namespace Modules\Post\Models;
 
+use App\Traits\Paginatable;
+use Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\User\Models\User;
 
 class UserPostVisit extends Model
 {
+    use Paginatable;
+
     protected $table = 'user_post_visits';
 
     const CREATED_AT = 'first_visited_at';

@@ -2,11 +2,14 @@
 
 namespace Modules\User\Models;
 
+use App\Traits\Paginatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserInfo extends Model
 {
+    use Paginatable;
+
     protected $table = 'user_infos';
 
     protected $fillable = [

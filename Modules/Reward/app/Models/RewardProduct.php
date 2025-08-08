@@ -2,13 +2,16 @@
 
 namespace Modules\Reward\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Traits\Paginatable;
 use Modules\Product\Models\Product;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RewardProduct extends Model
 {
+    use Paginatable;
+
     protected $table = 'reward_products';
 
     public $timestamps = false;

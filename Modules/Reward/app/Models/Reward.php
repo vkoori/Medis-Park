@@ -2,18 +2,20 @@
 
 namespace Modules\Reward\Models;
 
+use App\Traits\Paginatable;
+use Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Reward\Enums\RewardTypeEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Modules\Reward\Enums\RewardTypeEnum;
-use Modules\User\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reward extends Model
 {
     use SoftDeletes;
+    use Paginatable;
 
     const UPDATED_AT = null;
 

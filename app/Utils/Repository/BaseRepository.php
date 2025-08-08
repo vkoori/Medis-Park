@@ -4,6 +4,7 @@ namespace App\Utils\Repository;
 
 use Illuminate\Support\Facades\Date;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -134,11 +135,11 @@ abstract class BaseRepository
         return $this->fetchData($conditions, [])->delete();
     }
 
-    private function fetchData(?array $conditions, array $relations)
+    protected function fetchData(?array $conditions, array $relations, ?Builder $query = null): Builder
     {
-        return $this
-            ->getModel()
-            ->query()
+        $query ??= $this->getModel()->query();
+
+        return $query
             ->when(
                 $conditions,
                 fn($query) => $query->where($conditions)

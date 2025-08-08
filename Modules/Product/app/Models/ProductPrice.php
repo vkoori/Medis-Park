@@ -2,11 +2,14 @@
 
 namespace Modules\Product\Models;
 
+use App\Traits\Paginatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProductPrice extends Model
 {
+    use Paginatable;
+
     protected $table = 'product_prices';
 
     const UPDATED_AT = null;

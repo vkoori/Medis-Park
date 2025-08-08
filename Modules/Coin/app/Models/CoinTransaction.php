@@ -2,18 +2,21 @@
 
 namespace Modules\Coin\Models;
 
+use App\Traits\Paginatable;
+use Modules\User\Models\User;
+use Modules\Order\Models\Order;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Reward\Models\RewardUserUnlock;
+use Modules\Coin\Enums\TransactionStatusEnum;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Order\Models\Order;
-use Modules\Reward\Models\RewardUserUnlock;
-use Modules\User\Models\User;
 use Modules\Coin\Enums\TransactionReferenceTypeEnum;
-use Modules\Coin\Enums\TransactionStatusEnum;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CoinTransaction extends Model
 {
+    use Paginatable;
+
     protected $table = 'coin_transactions';
 
     protected $fillable = [

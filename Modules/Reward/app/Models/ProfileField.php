@@ -2,13 +2,16 @@
 
 namespace Modules\Reward\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Reward\Enums\ProfileLevelEnum;
+use App\Traits\Paginatable;
 use Modules\User\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Reward\Enums\ProfileLevelEnum;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProfileField extends Model
 {
+    use Paginatable;
+
     protected $table = 'profile_fields';
 
     protected $fillable = [

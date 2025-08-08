@@ -2,12 +2,15 @@
 
 namespace Modules\Media\Models;
 
+use App\Traits\Paginatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Media extends Model
 {
+    use Paginatable;
+
     const UPDATED_AT = null;
 
     protected $table = 'medias';

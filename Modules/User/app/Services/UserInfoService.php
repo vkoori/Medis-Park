@@ -2,18 +2,29 @@
 
 namespace Modules\User\Services;
 
-use App\Dto\UserInfoUpdatedEvent;
 use App\Traits\ClassResolver;
+use Modules\User\Models\User;
+use App\Dto\UserInfoUpdatedEvent;
+use Modules\User\Dto\UserInfoDto;
+use Modules\User\Models\UserInfo;
 use Illuminate\Support\Facades\DB;
 use Laravel\Octane\Facades\Octane;
-use Modules\User\Dto\UserInfoDto;
 use Modules\User\Enums\UserStatusEnum;
-use Modules\User\Models\User;
-use Modules\User\Models\UserInfo;
+use Modules\User\Exceptions\UserExceptions;
 
 class UserInfoService
 {
     use ClassResolver;
+
+    public function getUser(int $userId, bool $findOrFail = true): ?User
+    {
+        $user = $this->getUserRepository()->findByIdOrFail(modelId: $userId);
+        if ($findOrFail && !$user) {
+            throw UserExceptions::userNotFound();
+        }
+
+        return $user;
+    }
 
     public function getUserInfo(int $userId): ?UserInfo
     {

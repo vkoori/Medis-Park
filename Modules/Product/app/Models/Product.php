@@ -2,17 +2,20 @@
 
 namespace Modules\Product\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Mews\Purifier\Casts\CleanHtml;
-use Modules\Media\Models\Media;
-use Modules\Reward\Models\RewardProduct;
+use App\Traits\Paginatable;
 use Modules\User\Models\User;
+use Modules\Media\Models\Media;
+use Mews\Purifier\Casts\CleanHtml;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Reward\Models\RewardProduct;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
+    use Paginatable;
+
     protected $table = 'products';
 
     protected $fillable = [

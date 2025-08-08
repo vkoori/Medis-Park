@@ -2,16 +2,19 @@
 
 namespace Modules\Order\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Modules\Coin\Models\CoinTransaction;
+use App\Traits\Paginatable;
 use Modules\User\Models\User;
 use Modules\Product\Models\Product;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Coin\Models\CoinTransaction;
 use Modules\Order\Enums\OrderStatusEnum;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Order extends Model
 {
+    use Paginatable;
+
     protected $table = 'orders';
 
     protected $fillable = [

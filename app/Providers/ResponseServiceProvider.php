@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 
 class ResponseServiceProvider extends ServiceProvider
 {
-    public function boot(): void
+    public function register(): void
     {
         $this->app->bind('error_utils', Errors::class);
         $this->app->bind('success_utils', Success::class);

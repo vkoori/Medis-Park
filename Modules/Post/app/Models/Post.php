@@ -2,15 +2,18 @@
 
 namespace Modules\Post\Models;
 
+use App\Traits\Paginatable;
+use Modules\User\Models\User;
+use Modules\Media\Models\Media;
+use Mews\Purifier\Casts\CleanHtml;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Mews\Purifier\Casts\CleanHtml;
-use Modules\Media\Models\Media;
-use Modules\User\Models\User;
 
 class Post extends Model
 {
+    use Paginatable;
+
     protected $table = 'posts';
 
     protected $fillable = [
@@ -28,7 +31,7 @@ class Post extends Model
         'expired_at' => 'datetime',
     ];
 
-    public function banner(): BelongsTo
+    public function media(): BelongsTo
     {
         return $this->belongsTo(Media::class, 'banner');
     }

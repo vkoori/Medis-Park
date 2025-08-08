@@ -1,29 +1,30 @@
 <?php
 
-use App\Exceptions\HttpException;
-use App\Exceptions\HttpExceptionCodes;
-use App\Http\Middlewares\NormalizeInputMiddleware;
-use App\Http\Middlewares\RawBodyMiddleware;
-use App\Http\Middlewares\SetLocaleMiddleware;
-use App\Utils\Exceptions\ExceptionUtil;
-use App\Utils\Response\ErrorFacade;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
-use Illuminate\Validation\UnauthorizedException;
-use Illuminate\Validation\ValidationException;
+use App\Exceptions\HttpException;
+use App\Utils\Response\ErrorFacade;
+use App\Exceptions\HttpExceptionCodes;
+use Illuminate\Foundation\Application;
+use App\Utils\Exceptions\ExceptionUtil;
+use App\Http\Middleware\RawBodyMiddleware;
 use Laravel\Octane\Exceptions\DdException;
+use App\Http\Middleware\SetLocaleMiddleware;
+use Illuminate\Auth\AuthenticationException;
 use Laravel\Octane\Exceptions\TaskException;
-use Spatie\Permission\Middleware\PermissionMiddleware;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\UnauthorizedException;
 use Spatie\Permission\Middleware\RoleMiddleware;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use App\Http\Middleware\NormalizeInputMiddleware;
 use Vkoori\JwtAuth\Exceptions\BaseGuardException;
 use Vkoori\JwtAuth\Middlewares\JwtScopeMiddleware;
+use App\Http\Middleware\PutPatchFormDataMiddleware;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 use Vkoori\LaravelJwt\Exceptions\NonVerifyJwtException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -35,6 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append([
             SetLocaleMiddleware::class,
             RawBodyMiddleware::class,
+            PutPatchFormDataMiddleware::class,
             NormalizeInputMiddleware::class,
         ])->alias([
             'jwt.scope' => JwtScopeMiddleware::class,

@@ -2,11 +2,14 @@
 
 namespace Modules\Reward\Models;
 
+use App\Traits\Paginatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class RewardCoin extends Model
 {
+    use Paginatable;
+
     protected $table = 'reward_coins';
 
     public $timestamps = false;

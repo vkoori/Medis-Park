@@ -2,14 +2,17 @@
 
 namespace Modules\User\Models;
 
+use App\Traits\Paginatable;
+use Modules\User\Enums\OtpTypeEnum;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Hash;
-use Modules\User\Enums\OtpTypeEnum;
 
 class UserOtp extends Model
 {
+    use Paginatable;
+
     protected $table = 'user_otps';
 
     const UPDATED_AT = null;

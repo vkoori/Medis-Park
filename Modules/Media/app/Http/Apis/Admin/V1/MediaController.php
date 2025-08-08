@@ -3,14 +3,26 @@
 namespace Modules\Media\Http\Apis\Admin\V1;
 
 use App\Utils\Response\SuccessFacade;
-use Modules\Media\Http\Resources\MediaResource;
 use Modules\Media\Services\MediaService;
 use Modules\Media\Enums\UploadableDiskEnum;
+use Modules\Media\Http\Resources\MediaResource;
 use Modules\Media\Http\Requests\V1\UploadRequest;
 
 class MediaController
 {
-    public function disks()
+    public function privateDisks()
+    {
+        $disks = array_map(
+            callback: fn(UploadableDiskEnum $disk): array => $disk->translate(),
+            array: UploadableDiskEnum::private()
+        );
+
+        return SuccessFacade::ok(
+            data: $disks
+        );
+    }
+
+    public function allDisks()
     {
         return SuccessFacade::ok(
             data: UploadableDiskEnum::translates()

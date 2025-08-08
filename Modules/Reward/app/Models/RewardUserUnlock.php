@@ -2,14 +2,17 @@
 
 namespace Modules\Reward\Models;
 
+use App\Traits\Paginatable;
+use Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Coin\Models\CoinTransaction;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Modules\Coin\Models\CoinTransaction;
-use Modules\User\Models\User;
 
 class RewardUserUnlock extends Model
 {
+    use Paginatable;
+
     protected $table = 'reward_user_unlocks';
 
     const UPDATED_AT = null;

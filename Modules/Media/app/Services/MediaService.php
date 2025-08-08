@@ -125,7 +125,7 @@ class MediaService
         );
     }
 
-    public function getMediaUrl(int $id)
+    public function getMediaUrl(int $id): string
     {
         $media = $this->getMediaRepository()->findById(modelId: $id);
         if (!$media) {
@@ -135,11 +135,21 @@ class MediaService
         return $media->path;
     }
 
+    public function getMedia(int $id): Media
+    {
+        $media = $this->getMediaRepository()->findById(modelId: $id);
+        if (!$media) {
+            throw MediaExceptions::fileNotFound();
+        }
+
+        return $media;
+    }
+
     protected function getUniqueFilePath(
         Filesystem $storage,
         string $dir,
         SymfonyUploadedFile|string $file
-    ) {
+    ): string {
         if ($file instanceof UploadedFile) {
             $fileName = $file->getClientOriginalName();
             $fileExt = $file->getClientOriginalExtension();
@@ -221,7 +231,7 @@ class MediaService
         return ['width' => null, 'height' => null];
     }
 
-    protected function detectFileName(UploadedFile|string $file)
+    protected function detectFileName(UploadedFile|string $file): string
     {
         return match (true) {
             $file instanceof UploadedFile => $file->getClientOriginalName(),
@@ -230,7 +240,7 @@ class MediaService
         };
     }
 
-    protected function detectExtensionUsingFileContent(string $content)
+    protected function detectExtensionUsingFileContent(string $content): string
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'file_');
         file_put_contents($tempFile, $content);
