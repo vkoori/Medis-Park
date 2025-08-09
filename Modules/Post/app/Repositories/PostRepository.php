@@ -28,7 +28,7 @@ class PostRepository extends BaseRepository
             ->where('available_at', '<=', $now)
             ->where('expired_at', '>=', $now)
             ->whereDoesntHave('seen', function ($query) use ($userId) {
-                $query->where('user_post_visits.user_id', $userId);
+                $query->where('user_id', $userId);
             })
             ->inRandomOrder()
             ->with(['media'])
