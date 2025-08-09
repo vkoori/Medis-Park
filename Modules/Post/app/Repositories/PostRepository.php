@@ -4,7 +4,6 @@ namespace Modules\Post\Repositories;
 
 use Carbon\Carbon;
 use Modules\Post\Models\Post;
-use Illuminate\Support\Facades\DB;
 use App\Utils\Repository\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -28,11 +27,8 @@ class PostRepository extends BaseRepository
             ->query()
             ->where('available_at', '<=', $now)
             ->where('expired_at', '>=', $now)
-            ->whereNotExists(function ($query) use ($userId) {
-                $query->select(DB::raw(1))
-                    ->from('user_post_visits')
-                    ->whereColumn('user_post_visits.post_id', 'posts.id')
-                    ->where('user_post_visits.user_id', $userId);
+            ->whereDoesntHave('seen', function ($query) use ($userId) {
+                $query->where('user_post_visits.user_id', $userId);
             })
             ->inRandomOrder()
             ->with(['media'])
