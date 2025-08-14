@@ -26,14 +26,14 @@ class S3ServiceProvider extends ServiceProvider
             ];
 
             $s3 = new S3Client($config);
-            $this->createBucket(
-                $s3,
-                env('AWS_PUBLIC_BUCKET')
-            );
-            $this->publicReadPolicy(
-                $s3,
-                env('AWS_PUBLIC_BUCKET')
-            );
+            // $this->createBucket(
+            //     $s3,
+            //     env('AWS_PUBLIC_BUCKET')
+            // );
+            // $this->publicReadPolicy(
+            //     $s3,
+            //     env('AWS_PUBLIC_BUCKET')
+            // );
             $this->createBucket(
                 $s3,
                 env('AWS_PRIVATE_BUCKET')
