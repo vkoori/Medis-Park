@@ -1,3 +1,5 @@
 {
-  "app": "medis-staging"
+  "app": "medis-staging",
+  "port": 3000,
+  "image": "ghcr.io/vkoori/medis-clinic:latest"
 }
