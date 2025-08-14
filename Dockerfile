@@ -111,8 +111,21 @@ COPY .docker/supervisor/dev.conf /opt/supervisor/dev.conf
 COPY .docker/supervisor/web.conf /opt/supervisor/web.conf
 COPY .docker/supervisor/subscriber.conf /opt/supervisor/subscriber.conf
 COPY .docker/supervisor/scheduler.conf /opt/supervisor/scheduler.conf
+COPY .docker/supervisor/all-in-one.conf /opt/supervisor/all-in-one.conf
 
 RUN chmod +x /opt/scripts/*.sh
 
+ARG MAX_CHILDREN=20
+ARG REQUEST_TERMINATE_TIMEOUT=30s
+ARG SUPERVISOR_CONFIG=/opt/supervisor/web.conf
+ARG ENABLE_INI=web-prod
+ARG NGINX_CONF=prod.conf
+
 ENTRYPOINT ["/opt/scripts/entrypoint.sh"]
-CMD ["--max_children=20", "--request_terminate_timeout=30s", "--supervisor_config=/opt/supervisor/web.conf", "--enable_ini=web-prod", "--nginx_conf=prod.conf"]
+CMD [ \
+    "--max_children=${MAX_CHILDREN}", \
+    "--request_terminate_timeout=${REQUEST_TERMINATE_TIMEOUT}", \
+    "--supervisor_config=${SUPERVISOR_CONFIG}", \
+    "--enable_ini=${ENABLE_INI}", \
+    "--nginx_conf=${NGINX_CONF}" \
+]
