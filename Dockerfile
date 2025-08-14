@@ -115,23 +115,5 @@ COPY .docker/supervisor/all-in-one.conf /opt/supervisor/all-in-one.conf
 
 RUN chmod +x /opt/scripts/*.sh
 
-ARG MAX_CHILDREN=20
-ARG REQUEST_TERMINATE_TIMEOUT=30s
-ARG SUPERVISOR_CONFIG=/opt/supervisor/web.conf
-ARG ENABLE_INI=web-prod
-ARG NGINX_CONF=prod.conf
-
-ENV MAX_CHILDREN=${MAX_CHILDREN} \
-    REQUEST_TERMINATE_TIMEOUT=${REQUEST_TERMINATE_TIMEOUT} \
-    SUPERVISOR_CONFIG=${SUPERVISOR_CONFIG} \
-    ENABLE_INI=${ENABLE_INI} \
-    NGINX_CONF=${NGINX_CONF}
-
-
 ENTRYPOINT ["/opt/scripts/entrypoint.sh"]
-CMD "--max_children=${MAX_CHILDREN}" \
-    "--request_terminate_timeout=${REQUEST_TERMINATE_TIMEOUT}" \
-    "--supervisor_config=${SUPERVISOR_CONFIG}" \
-    "--enable_ini=${ENABLE_INI}" \
-    "--nginx_conf=${NGINX_CONF}"
-
+CMD ["--max_children=1", "--request_terminate_timeout=30s", "--supervisor_config=/opt/supervisor/all-in-one.conf", "--enable_ini=web-prod", "--nginx_conf=prod.conf"]
