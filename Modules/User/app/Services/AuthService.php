@@ -6,13 +6,11 @@ use App\Exceptions\NotImplementedException;
 use App\Traits\ClassResolver;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Octane\Facades\Octane;
 use Modules\Notification\Notifications\OtpNotification;
 use Modules\User\Enums\OtpTypeEnum;
 use Modules\User\Enums\UserStatusEnum;
 use Modules\User\Exceptions\AuthExceptions;
 use Modules\User\Models\User;
-use Modules\User\Models\UserOtp;
 use Modules\User\Support\FormattedPhoneNumber;
 
 class AuthService
@@ -55,15 +53,11 @@ class AuthService
 
     public function loginCustomerByOtp(int $userId, string $otp, string $issuer): array
     {
-        [$activeOtp, $user] = Octane::concurrently(tasks: [
-            fn(): ?UserOtp => $this->getUserOtpRepository()->findActiveOtp(
-                userId: $userId,
-                type: OtpTypeEnum::LOGIN_CUSTOMER,
-            ),
-            fn(): User => $this->getUserRepository()->findByIdOrFail(
-                modelId: $userId
-            ),
-        ]);
+        $activeOtp = $this->getUserOtpRepository()->findActiveOtp(
+            userId: $userId,
+            type: OtpTypeEnum::LOGIN_CUSTOMER,
+            relations: ['user']
+        );
 
         if (!$activeOtp) {
             throw AuthExceptions::expiredOtp();
@@ -72,26 +66,26 @@ class AuthService
             throw AuthExceptions::invalidOtp();
         }
 
-        DB::transaction(callback: function () use ($activeOtp, $user) {
+        DB::transaction(callback: function () use ($activeOtp) {
             $this->getUserOtpRepository()->batchUpdate(
                 conditions: ['id' => $activeOtp->id],
                 values: ['used' => true]
             );
 
-            if ($user->status == UserStatusEnum::UNVERIFIED) {
+            if ($activeOtp->user->status == UserStatusEnum::UNVERIFIED) {
                 $this->getUserRepository()->batchUpdate(
-                    conditions: ['id' => $user->id],
+                    conditions: ['id' => $activeOtp->user->id],
                     values: ['status' => UserStatusEnum::REGISTERING]
                 );
             }
         });
 
-        $scope = match ($user->status) {
+        $scope = match ($activeOtp->user->status) {
             UserStatusEnum::UNVERIFIED, UserStatusEnum::REGISTERING => 'lead',
             UserStatusEnum::REGISTERED => 'customer',
             default => throw new NotImplementedException()
         };
-        $jwt = $user->accessToken(issuer: $issuer, scopes: [$scope]);
+        $jwt = $activeOtp->user->accessToken(issuer: $issuer, scopes: [$scope]);
 
         return ['scope' => $scope] + $jwt;
     }
@@ -114,15 +108,11 @@ class AuthService
 
     public function loginAdminByOtp(int $userId, string $otp, string $issuer): array
     {
-        [$activeOtp, $user] = Octane::concurrently(tasks: [
-            fn(): ?UserOtp => $this->getUserOtpRepository()->findActiveOtp(
-                userId: $userId,
-                type: OtpTypeEnum::LOGIN_ADMIN,
-            ),
-            fn(): User => $this->getUserRepository()->findByIdOrFail(
-                modelId: $userId
-            ),
-        ]);
+        $activeOtp = $this->getUserOtpRepository()->findActiveOtp(
+            userId: $userId,
+            type: OtpTypeEnum::LOGIN_ADMIN,
+            relations: ['user']
+        );
 
         if (!$activeOtp) {
             throw AuthExceptions::expiredOtp();
@@ -137,7 +127,7 @@ class AuthService
         );
 
         $scope = 'admin';
-        $jwt = $user->accessToken(issuer: $issuer, scopes: [$scope]);
+        $jwt = $activeOtp->user->accessToken(issuer: $issuer, scopes: [$scope]);
 
         return ['scope' => $scope] + $jwt;
     }

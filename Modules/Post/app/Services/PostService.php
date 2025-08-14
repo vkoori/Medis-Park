@@ -5,9 +5,7 @@ namespace Modules\Post\Services;
 use App\Traits\ClassResolver;
 use Modules\Post\Models\Post;
 use Modules\User\Models\User;
-use Modules\Media\Models\Media;
 use Modules\Post\Dto\PostSaveDto;
-use Laravel\Octane\Facades\Octane;
 use Modules\Post\Dto\PostFilterDto;
 use Modules\Post\Exceptions\PostExceptions;
 
@@ -47,22 +45,12 @@ class PostService
 
     public function findPost(int $postId, bool $loadModifier = false): Post
     {
-        $post = $this->getPostRepository()->findById(modelId: $postId);
+        $post = $this->getPostRepository()->findById(modelId: $postId, relations: ['media', 'updatedBy']);
         if (!$post) {
             throw PostExceptions::notFound();
         }
 
-        [$updatedBy, $media] = Octane::concurrently(tasks: [
-            fn(): ?User => $loadModifier
-                ? $this->getUserInfoService()->getUser(userId: $post->updated_by)
-                : null,
-            fn(): Media => $this->getMediaService()->getMedia(id: $post->banner)
-        ]);
-
-        return $post->setRelations([
-            'updatedBy' => $updatedBy,
-            'media' => $media
-        ]);
+        return $post;
     }
 
     public function updatePost(int $postId, PostSaveDto $dto, User $user): bool

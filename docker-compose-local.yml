@@ -8,11 +8,11 @@ services:
     env_file:
       - .env
     command:
-      - "--max_children=20"
+      - "--max_children=5"
       - "--request_terminate_timeout=30s"
-      - "--supervisor_config=/opt/supervisor/dev.conf"
+      - "--supervisor_config=/opt/supervisor/fpm.conf"
       - "--enable_ini=web-prod"
-      - "--nginx_conf=dev.conf"
+      - "--nginx_conf=fpm.conf"
     ports:
      - 80:80
     volumes:
