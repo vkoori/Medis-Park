@@ -48,7 +48,7 @@ jobs:
             echo "Deploying to production..."
           elif [ "$GITHUB_REF" = "refs/heads/develop" ]; then
             liara deploy \
-              --app=medis-staging \
+              --app=media-backed \
               --image=$IMAGE_NAME \
               --api-token=$LIARA_API_TOKEN \
               --no-app-logs \
