@@ -26,9 +26,14 @@ jobs:
           if [ "$GITHUB_REF" = "refs/heads/master" ]; then
             echo "Deploying to production..."
           elif [ "$GITHUB_REF" = "refs/heads/develop" ]; then
+            find . -name "liara.json" || echo "no liara.json found"
+            pwd && ls -la
+
             liara deploy \
+              --path="$(pwd)" \
               --platform=docker \
               --app=medis-staging \
+              --dockerfile=Dockerfile \
               --build-arg MAX_CHILDREN=1 \
               --build-arg REQUEST_TERMINATE_TIMEOUT=30s \
               --build-arg SUPERVISOR_CONFIG=/opt/supervisor/all-in-one.conf \
