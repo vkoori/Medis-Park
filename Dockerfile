@@ -129,9 +129,9 @@ ENV MAX_CHILDREN=${MAX_CHILDREN} \
 
 
 ENTRYPOINT ["/opt/scripts/entrypoint.sh"]
-CMD --max_children=${MAX_CHILDREN} \
-    --request_terminate_timeout=${REQUEST_TERMINATE_TIMEOUT} \
-    --supervisor_config=${SUPERVISOR_CONFIG} \
-    --enable_ini=${ENABLE_INI} \
-    --nginx_conf=${NGINX_CONF}
+CMD "--max_children=${MAX_CHILDREN}" \
+    "--request_terminate_timeout=${REQUEST_TERMINATE_TIMEOUT}" \
+    "--supervisor_config=${SUPERVISOR_CONFIG}" \
+    "--enable_ini=${ENABLE_INI}" \
+    "--nginx_conf=${NGINX_CONF}"
 
