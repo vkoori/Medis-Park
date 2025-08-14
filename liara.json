@@ -1,6 +1,5 @@
 {
   "port": 80,
   "platform": "docker",
-  "app": "media-backed",
-  "image": "ghcr.io/vkoori/medis-clinic:latest"
+  "app": "media-backed"
 }
