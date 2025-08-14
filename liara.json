@@ -1,8 +1,3 @@
 {
-  "app": "medis-staging",
-  "port": 3000,
-  "build": {
-    "location": "germany"
-  },
-  "disks": []
+  "app": "medis-staging"
 }
