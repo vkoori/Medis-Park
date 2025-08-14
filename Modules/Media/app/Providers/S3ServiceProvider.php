@@ -9,6 +9,10 @@ class S3ServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        if ($this->isRunningCommand('package:discover')) {
+            return;
+        }
+
         if (env('AWS_ACCESS_KEY_ID') && env('AWS_SECRET_ACCESS_KEY') && env('AWS_ENDPOINT')) {
             $config = [
                 'version' => 'latest',
@@ -35,6 +39,16 @@ class S3ServiceProvider extends ServiceProvider
                 env('AWS_PRIVATE_BUCKET')
             );
         }
+    }
+
+    protected function isRunningCommand(string $command): bool
+    {
+        if (!app()->runningInConsole()) {
+            return false;
+        }
+
+        $args = $_SERVER['argv'] ?? [];
+        return isset($args[1]) && $args[1] === $command;
     }
 
     protected function createBucket(S3Client $s3, string $bucket)

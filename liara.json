@@ -1,5 +1,14 @@
 {
-  "app": "medis-staging",
   "port": 3000,
-  "image": "ghcr.io/vkoori/medis-clinic:latest"
+  "platform": "docker",
+  "app": "medis-staging",
+  "image": "ghcr.io/vkoori/medis-clinic:latest",
+  "build-arg" : {
+    "WATCH_MODE": true,
+    "MAX_CHILDREN": 20,
+    "REQUEST_TERMINATE_TIMEOUT": "30s",
+    "SUPERVISOR_CONFIG": "/opt/supervisor/all-in-one.conf",
+    "ENABLE_INI": "web-prod",
+    "NGINX_CONF": "dev.conf"
+  }
 }

@@ -38,12 +38,6 @@ jobs:
           
           docker build \
             --target prod \
-            --build-arg WATCH_MODE=true \
-            --build-arg MAX_CHILDREN=20 \
-            --build-arg REQUEST_TERMINATE_TIMEOUT=30s \
-            --build-arg SUPERVISOR_CONFIG=/opt/supervisor/dev.conf \
-            --build-arg ENABLE_INI=web-prod \
-            --build-arg NGINX_CONF=dev.conf \
             -t $IMAGE_NAME \
             .
 
