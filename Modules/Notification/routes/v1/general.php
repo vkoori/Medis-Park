@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 Route::get('/sms', function () {
-    if (!app()->isLocal()) {
+    if (!app()->isLocal() && !app()->environment('staging')) {
         throw new RouteNotFoundException();
     }
 
