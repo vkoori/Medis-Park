@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\HttpException;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
@@ -10,7 +11,7 @@ Route::get('/sms', function () {
 
     $path = storage_path('logs/sms.log');
     if (!file_exists($path)) {
-        abort(404, 'Log file not found.');
+        throw new HttpException(404, 'Log file not found.');
     }
 
     return response()->file($path, [
