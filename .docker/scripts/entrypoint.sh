@@ -10,6 +10,9 @@ set -e
 # Reconfigure nginx
 /opt/scripts/nginx.sh "$@"
 
+# Start Redis
+/opt/scripts/redis.sh
+
 # Laravel commands
 /opt/scripts/laravel.sh
 

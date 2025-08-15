@@ -5,7 +5,9 @@ namespace Modules\User\Database\Seeders;
 use App\Traits\ClassResolver;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use libphonenumber\PhoneNumberUtil;
 use Modules\User\Enums\UserStatusEnum;
+use Modules\User\Support\FormattedPhoneNumber;
 
 class SuperAdminSeeder extends Seeder
 {
@@ -13,7 +15,18 @@ class SuperAdminSeeder extends Seeder
 
     public function run(): void
     {
-        foreach (config('user.admin.super_admins') as $mobile) {
+        $superAdmins = config('user.admin.super_admins');
+        $superAdmins = array_map(
+            callback: fn($superAdmin): FormattedPhoneNumber => new FormattedPhoneNumber(
+                phoneNumber: PhoneNumberUtil::getInstance()->parse(
+                    numberToParse: trim($superAdmin),
+                    defaultRegion: 'IR'
+                )
+            ),
+            array: $superAdmins
+        );
+
+        foreach ($superAdmins as $mobile) {
             DB::transaction(function () use ($mobile) {
                 $user = $this->getUserRepository()->firstOrCreate(
                     attributes: [

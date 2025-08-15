@@ -1,5 +1,11 @@
 {
   "port": 80,
   "platform": "docker",
-  "app": "media-backed"
+  "app": "media-backed",
+  "disks": [
+    {
+      "name": "redis",
+      "mountTo": "/data"
+    }
+  ]
 }

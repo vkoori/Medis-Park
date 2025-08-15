@@ -18,6 +18,8 @@ RUN chgrp -R 0 /tmp/app && \
     rm -rf /tmp/app && \
     composer dump-autoload --classmap-authoritative && \
     chown www-data:www-data -R storage/ bootstrap/ && \
+    touch storage/log/laravel.log && \
+    chmod 777 -R storage/log/ && \
     echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" | crontab -
 
 ################## base ##################
@@ -37,6 +39,7 @@ COPY .docker/scripts/entrypoint.sh /opt/scripts/entrypoint.sh
 COPY .docker/scripts/setup-jwt.sh /opt/scripts/setup-jwt.sh
 COPY .docker/scripts/php-fpm.sh /opt/scripts/php-fpm.sh
 COPY .docker/scripts/nginx.sh /opt/scripts/nginx.sh
+COPY .docker/scripts/redis.sh /opt/scripts/redis.sh
 COPY .docker/scripts/laravel.sh /opt/scripts/laravel.sh
 COPY .docker/scripts/supervisord.sh /opt/scripts/supervisord.sh
 COPY .docker/supervisor/fpm.conf /opt/supervisor/fpm.conf
