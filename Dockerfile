@@ -17,9 +17,10 @@ RUN chgrp -R 0 /tmp/app && \
     cp -a /tmp/app/. . && \
     rm -rf /tmp/app && \
     composer dump-autoload --classmap-authoritative && \
+    mkdir -p storage/log bootstrap/cache && \
     chown www-data:www-data -R storage/ bootstrap/ && \
     touch storage/log/laravel.log && \
-    chmod 777 -R storage/log/ && \
+    chmod 777 -R storage/log/laravel.log && \
     echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" | crontab -
 
 ################## base ##################
