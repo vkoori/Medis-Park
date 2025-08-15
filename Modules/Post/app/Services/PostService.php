@@ -114,4 +114,11 @@ class PostService
 
         $this->getPostRepository()->deleteById(modelId: $postId);
     }
+
+    public function getCustomerPosts(int $jYear, int $jMonth, int $userId)
+    {
+        $month = (new Jalalian(year: $jYear, month: $jMonth, day: 1))->format(format: 'Y-m');
+
+        return $this->getPostRepository()->getShuffledPosts(month: $month, userId: $userId, relations: ['media']);
+    }
 }

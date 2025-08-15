@@ -6,7 +6,7 @@ use Morilog\Jalali\Jalalian;
 use Illuminate\Support\Facades\Auth;
 use App\Utils\Response\SuccessFacade;
 use Modules\Post\Services\PostVisitService;
-use Modules\Post\Http\Resources\PostResource;
+use Modules\Post\Http\Resources\PostAdminResource;
 
 class PostVisitController
 {
@@ -15,7 +15,7 @@ class PostVisitController
         $postVisit = $postVisitService->unlockPostNormally(userId: Auth::id());
 
         return SuccessFacade::ok(
-            data: PostResource::make($postVisit)
+            data: PostAdminResource::make($postVisit)
         );
     }
 
@@ -31,7 +31,7 @@ class PostVisitController
         );
 
         return SuccessFacade::ok(
-            data: PostResource::collection($posts)
+            data: PostAdminResource::collection($posts)
         );
     }
 }

@@ -19,7 +19,22 @@ class PostRepository extends BaseRepository
         return $this->post;
     }
 
-    public function getRandomAvailablePostForUser($userId): ?Post
+    public function getShuffledPosts(string $month, int $userId, array $relations = [])
+    {
+        return $this->getModel()
+            ->query()
+            ->where('month', $month)
+            ->withCount([
+                'seen as visited' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }
+            ])
+            ->with($relations)
+            ->orderByRaw("MD5(CONCAT(?, posts.id))", [$userId])
+            ->get();
+    }
+
+    /* public function getRandomAvailablePostForUser($userId): ?Post
     {
         $now = now();
 
@@ -33,9 +48,9 @@ class PostRepository extends BaseRepository
             ->inRandomOrder()
             ->with(['media'])
             ->first();
-    }
+    } */
 
-    public function getUnlockedPosts(int $userId, Carbon $from, Carbon $toExclusive)
+    /* public function getUnlockedPosts(int $userId, Carbon $from, Carbon $toExclusive)
     {
         return $this->getModel()
             ->query()
@@ -47,7 +62,7 @@ class PostRepository extends BaseRepository
             })
             ->with(['media'])
             ->get();
-    }
+    } */
 
     protected function fetchData(?array $conditions, array $relations, ?Builder $query = null): Builder
     {

@@ -20,11 +20,14 @@ class CrmService
 
     public function getUserInfo(string $mobile, bool $throwException = false): ?UserInfoDto
     {
+        $firstNames = ["John", "Jane", "Alice", "Bob", "Emma", "Michael"];
+        $lastNames = ["Smith", "Doe", "Johnson", "Brown", "Davis", "Miller"];
+
         return new UserInfoDto(
             mobile: $mobile,
             nationalCode: rand(1000000000, 9999999999),
-            firstName: fake()->firstName(),
-            lastName: fake()->lastName()
+            firstName: $firstNames[array_rand($firstNames)],
+            lastName: $lastNames[array_rand($lastNames)]
         );
     }
 

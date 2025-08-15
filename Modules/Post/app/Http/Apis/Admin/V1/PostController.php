@@ -8,7 +8,7 @@ use Modules\Post\Dto\PostFilterDto;
 use Illuminate\Support\Facades\Auth;
 use App\Utils\Response\SuccessFacade;
 use Modules\Post\Services\PostService;
-use Modules\Post\Http\Resources\PostResource;
+use Modules\Post\Http\Resources\PostAdminResource;
 use Modules\Post\Http\Requests\V1\PostSaveRequest;
 use Modules\Post\Http\Requests\V1\PostFilterRequest;
 
@@ -20,7 +20,7 @@ class PostController
         $post = $postService->createMonthlyPost(dto: $dto, user: Auth::user());
 
         return SuccessFacade::ok(
-            data: PostResource::make($post)
+            data: PostAdminResource::make($post)
         );
     }
 
@@ -30,7 +30,7 @@ class PostController
         $posts = $postService->paginate(dto: $dto);
 
         return SuccessFacade::ok(
-            data: PostResource::collection($posts)
+            data: PostAdminResource::collection($posts)
         );
     }
 
@@ -39,7 +39,7 @@ class PostController
         $post = $postService->findPost(postId: $postId, loadModifier: true);
 
         return SuccessFacade::ok(
-            data: PostResource::make($post)
+            data: PostAdminResource::make($post)
         );
     }
 
