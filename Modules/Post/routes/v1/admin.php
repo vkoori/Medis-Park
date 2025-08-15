@@ -7,4 +7,4 @@ Route::post('/', [PostController::class, 'store'])->name('store');
 Route::get('/', [PostController::class, 'index'])->name('index');
 Route::get('/{id}', [PostController::class, 'show'])->name('show');
 Route::patch('/{id}', [PostController::class, 'update'])->name('update');
-Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
+// Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
