@@ -13,10 +13,8 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->foreignId('post_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->enum('type', UserPostVisitEnum::values());
-            $table->date('calendar_day')->comment('timezone: ' . config(key: 'post.daily_reset_timezone'));
             $table->timestamp('first_visited_at');
             $table->unique(['user_id', 'post_id']);
-            $table->index(['user_id', 'calendar_day']);
         });
     }
 

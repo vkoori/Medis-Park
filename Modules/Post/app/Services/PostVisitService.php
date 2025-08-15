@@ -10,6 +10,7 @@ use Modules\Post\Models\Post;
 use Illuminate\Support\Facades\Date;
 use Modules\Post\Enums\UserPostVisitEnum;
 use Modules\Post\Exceptions\PostVisitExceptions;
+use Morilog\Jalali\Jalalian;
 
 class PostVisitService
 {
@@ -17,33 +18,30 @@ class PostVisitService
 
     public function unlockPostNormally(int $userId): Post
     {
-        if (!$this->canUserUnlock(userId: $userId)) {
-            throw PostVisitExceptions::canNotUnlockPost();
+        $post = $this->getPostRepository()->findTodayPost(
+            date: Jalalian::now(),
+            userId: $userId,
+            relations: ['media']
+        );
+
+        if (!$post) {
+            throw PostVisitExceptions::notPostForVisit();
         }
 
-        $post = $this->getPostRepository()->getRandomAvailablePostForUser(userId: $userId);
+        if ($post->visited) {
+            throw PostVisitExceptions::alreadySeen();
+        }
 
         $this->getUserPostVisitRepository()->create(attributes: [
             'user_id' => $userId,
             'post_id' => $post->id,
             'type' => UserPostVisitEnum::NORMAL,
-            'calendar_day' => config(key: 'post.daily_reset_time') == '00:00'
-                ? $this->getStartOfCurrentCycle()->startOfDay()
-                : $this->getStartOfCurrentCycle()->addDay()->startOfDay()
         ]);
+        $post->visited = 1;
 
         event(new PostSeenEvent(userId: $userId, postId: $post->id));
 
         return $post;
-    }
-
-    public function unlockedPosts(int $userId, Carbon $from, Carbon $toExclusive)
-    {
-        return $this->getPostRepository()->getUnlockedPosts(
-            userId: $userId,
-            from: $from,
-            toExclusive: $toExclusive
-        );
     }
 
     protected function canUserUnlock(int $userId): bool

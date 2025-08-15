@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Modules\Post\Models\Post;
 use App\Utils\Repository\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
+use Morilog\Jalali\Jalalian;
 
 /**
  * @extends BaseRepository<Post>
@@ -34,35 +35,21 @@ class PostRepository extends BaseRepository
             ->get();
     }
 
-    /* public function getRandomAvailablePostForUser($userId): ?Post
+    public function findTodayPost(Jalalian $date, int $userId, array $relations = []): ?Post
     {
-        $now = now();
-
         return $this->getModel()
             ->query()
-            ->where('available_at', '<=', $now)
-            ->where('expired_at', '>=', $now)
-            ->whereDoesntHave('seen', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })
-            ->inRandomOrder()
-            ->with(['media'])
+            ->where('month', $date->format('Y-m'))
+            ->withCount([
+                'seen as visited' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }
+            ])
+            ->with($relations)
+            ->orderByRaw("MD5(CONCAT(?, posts.id))", [$userId])
+            ->offset($date->getDay() - 1)
             ->first();
-    } */
-
-    /* public function getUnlockedPosts(int $userId, Carbon $from, Carbon $toExclusive)
-    {
-        return $this->getModel()
-            ->query()
-            ->whereHas('seen', function ($postVisit) use ($userId, $from, $toExclusive) {
-                $postVisit
-                    ->where('user_id', $userId)
-                    ->where('calendar_day', '>=', $from)
-                    ->where('calendar_day', '<', $toExclusive);
-            })
-            ->with(['media'])
-            ->get();
-    } */
+    }
 
     protected function fetchData(?array $conditions, array $relations, ?Builder $query = null): Builder
     {
