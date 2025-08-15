@@ -10,8 +10,7 @@ class PostFilterRequest extends FormRequest
     {
         return [
             'title' => ['nullable', 'string'],
-            'from' => ['nullable', 'required_with:to', 'date_format:Y-m-d\\TH:i:sP'],
-            'to' => ['nullable', 'required_with:from', 'date_format:Y-m-d\\TH:i:sP', 'after:from']
+            'month' => ['nullable', 'regex:/^\d{4}-(0?[1-9]|1[0-2])$/'],
         ];
     }
 }

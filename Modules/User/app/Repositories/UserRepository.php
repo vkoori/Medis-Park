@@ -16,4 +16,6 @@ class UserRepository extends BaseRepository
     {
         return $this->user;
     }
+
+    
 }

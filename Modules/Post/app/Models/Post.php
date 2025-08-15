@@ -17,23 +17,20 @@ class Post extends Model
     protected $table = 'posts';
 
     protected $fillable = [
-        'banner',
+        'media_id',
         'title',
         'content',
-        'available_at',
-        'expired_at',
+        'month',
         'updated_by',
     ];
 
     protected $casts = [
         'content' => CleanHtml::class,
-        'available_at' => 'datetime',
-        'expired_at' => 'datetime',
     ];
 
     public function media(): BelongsTo
     {
-        return $this->belongsTo(Media::class, 'banner');
+        return $this->belongsTo(Media::class, 'media_id');
     }
 
     public function updatedBy(): BelongsTo

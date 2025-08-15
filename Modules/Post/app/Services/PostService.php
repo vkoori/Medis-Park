@@ -3,30 +3,45 @@
 namespace Modules\Post\Services;
 
 use App\Traits\ClassResolver;
+use Illuminate\Support\Facades\DB;
 use Modules\Post\Models\Post;
 use Modules\User\Models\User;
 use Modules\Post\Dto\PostSaveDto;
 use Modules\Post\Dto\PostFilterDto;
 use Modules\Post\Exceptions\PostExceptions;
+use Morilog\Jalali\Jalalian;
 
 class PostService
 {
     use ClassResolver;
 
-    public function createPost(PostSaveDto $dto, User $user): Post
+    public function createMonthlyPost(PostSaveDto $dto, User $user): Post
     {
+        $month = $dto->getStartOfMonth();
+        $maxPostsInMonth = (clone $month)
+            ->addMonths(months: 1)
+            ->subDay()
+            ->getDay();
+
+        $existingPostsCount = $this->getPostRepository()->count(conditions: [
+            'month' => $dto->jYearMonth
+        ]);
+
+        if ($existingPostsCount >= $maxPostsInMonth) {
+            throw PostExceptions::postsIsFull();
+        }
+
         $media = $this->getMediaService()->upload(
-            file: $dto->banner,
+            file: $dto->media,
             disk: $dto->disk
         );
 
         return $this->getPostRepository()
             ->create(attributes: [
-                'banner' => $media->id,
+                'media_id' => $media->id,
                 'title' => $dto->title,
                 'content' => $dto->content,
-                'available_at' => $dto->availableAt,
-                'expired_at' => $dto->expiredAt,
+                'month' => $month->format('Y-m'),
                 'updated_by' => $user->id,
             ])
             ->setRelations([
@@ -37,15 +52,21 @@ class PostService
 
     public function paginate(PostFilterDto $dto)
     {
+        $monthFilter = [];
+        if ($dto->hasField('month')) {
+            $monthFilter['month'] = $dto->getStartOfMonth()->format('Y-m');
+        }
+
         return $this->getPostRepository()->paginate(
-            conditions: $dto->getProvidedDataSnakeCase(),
+            conditions: $monthFilter + $dto->getProvidedDataSnakeCase(),
             relations: ['updatedBy', 'media']
         );
     }
 
     public function findPost(int $postId, bool $loadModifier = false): Post
     {
-        $post = $this->getPostRepository()->findById(modelId: $postId, relations: ['media', 'updatedBy']);
+        $relations = $loadModifier ? ['media', 'updatedBy'] : ['media'];
+        $post = $this->getPostRepository()->findById(modelId: $postId, relations: $relations);
         if (!$post) {
             throw PostExceptions::notFound();
         }
@@ -59,32 +80,38 @@ class PostService
 
         if (
             $dto->hasField(propertyName: 'disk')
-            && $dto->hasField(propertyName: 'banner')
+            && $dto->hasField(propertyName: 'media')
         ) {
             $media = $this->getMediaService()->upload(
-                file: $dto->banner,
+                file: $dto->media,
                 disk: $dto->disk
             );
 
-            $values['banner'] = $media->id;
+            $values['media_id'] = $media->id;
         }
 
         if ($dto->hasField(propertyName: 'title')) {
-            $values['title'] = $media->title;
+            $values['title'] = $dto->title;
         }
         if ($dto->hasField(propertyName: 'content')) {
-            $values['content'] = $media->content;
-        }
-        if ($dto->hasField(propertyName: 'available_at')) {
-            $values['available_at'] = $media->available_at;
-        }
-        if ($dto->hasField(propertyName: 'expired_at')) {
-            $values['expired_at'] = $media->available_at;
+            $values['content'] = $dto->content;
         }
 
         return $this->getPostRepository()->batchUpdate(
             conditions: ['id' => $postId],
             values: $values
         );
+    }
+
+    public function removePost(int $postId)
+    {
+        $visited = $this->getUserPostVisitRepository()->count(conditions: [
+            'post_id' => $postId
+        ]);
+        if ($visited) {
+            throw PostExceptions::canNotRemoveVisitedPost();
+        }
+
+        $this->getPostRepository()->deleteById(modelId: $postId);
     }
 }

@@ -9,14 +9,12 @@ return new class extends Migration {
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('banner')->nullable()->constrained('medias')->restrictOnDelete()->restrictOnUpdate();
+            $table->foreignId('media_id')->nullable()->constrained('medias')->restrictOnDelete()->restrictOnUpdate();
             $table->string('title', 100)->index();
             $table->text('content');
-            $table->timestamp('available_at');
-            $table->timestamp('expired_at');
+            $table->string('month', 10)->index()->comment('Jalali');
             $table->foreignId('updated_by')->nullable()->constrained('users')->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();
-            $table->index(['available_at', 'expired_at']);
         });
     }
 

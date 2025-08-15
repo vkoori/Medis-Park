@@ -17,7 +17,7 @@ class PostSaveRequest extends FormRequest
                 $isUpdate ? 'required_with:banner' : 'required',
                 Rule::in(UploadableDiskEnum::private())
             ],
-            'banner' => [
+            'media' => [
                 $isUpdate ? 'required_with:disk' : 'required',
                 Rule::file()
                     ->max(10240)
@@ -36,6 +36,12 @@ class PostSaveRequest extends FormRequest
                         'video/x-msvideo',
                         'video/x-matroska',
                         'video/mpeg',
+                        # Audio
+                        'audio/mpeg',
+                        'audio/ogg',
+                        'audio/wav',
+                        'audio/x-wav',
+                        'audio/webm',
                     ])
             ],
             'title' => [
@@ -48,24 +54,9 @@ class PostSaveRequest extends FormRequest
                 'string',
                 'max:65535'
             ],
-            'available_at' => [
-                $isUpdate ? 'nullable' : 'required',
-                'date_format:Y-m-d\\TH:i:sP',
-                'after_or_equal:now',
-            ],
-            'expired_at' => [
-                $isUpdate ? 'nullable' : 'required',
-                'date_format:Y-m-d\\TH:i:sP',
-            ],
+            'j_year_month' => $isUpdate
+                ? ['prohibited']
+                : ['required', 'regex:/^\d{4}-(0?[1-9]|1[0-2])$/'],
         ];
-    }
-
-    public function withValidator($validator)
-    {
-        $validator->sometimes(
-            'expired_at',
-            'after:available_at',
-            fn($input): bool => !empty($input->available_at)
-        );
     }
 }

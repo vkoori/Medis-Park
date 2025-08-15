@@ -14,14 +14,14 @@ class UserPostVisit extends Model
 
     protected $table = 'user_post_visits';
 
-    const CREATED_AT = 'first_visited_at';
     const UPDATED_AT = null;
 
     protected $fillable = [
         'user_id',
         'post_id',
         'type',
-        'calendar_day'
+        'calendar_day',
+        'first_visited_at'
     ];
 
     protected $casts = [

@@ -53,14 +53,6 @@ class PostRepository extends BaseRepository
     {
         $q = $this->getModel()->query();
 
-        if (isset($conditions['from'])) {
-            $q->where('expired_at', '>=', $conditions['from']);
-            unset($conditions['from']);
-        }
-        if (isset($conditions['to'])) {
-            $q->where('available_at', '<=', $conditions['to']);
-            unset($conditions['to']);
-        }
         if (isset($conditions['title'])) {
             $q->whereLike('title', "%{$conditions['title']}%");
             unset($conditions['title']);

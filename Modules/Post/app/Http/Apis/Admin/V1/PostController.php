@@ -17,7 +17,7 @@ class PostController
     public function store(PostSaveRequest $request, PostService $postService)
     {
         $dto = PostSaveDto::fromFormRequest(request: $request);
-        $post = $postService->createPost(dto: $dto, user: Auth::user());
+        $post = $postService->createMonthlyPost(dto: $dto, user: Auth::user());
 
         return SuccessFacade::ok(
             data: PostResource::make($post)
@@ -51,5 +51,12 @@ class PostController
         return $updated
             ? SuccessFacade::ok()
             : ErrorFacade::badRequest();
+    }
+
+    public function destroy(int $postId, PostService $postService)
+    {
+        $postService->removePost(postId: $postId);
+
+        return SuccessFacade::ok();
     }
 }

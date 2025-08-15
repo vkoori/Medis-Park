@@ -15,11 +15,11 @@ class PostResource extends JsonResource
 
         $resource = [
             'id' => $this->id,
-            'media_id' => $this->banner,
+            'media_id' => $this->media_id,
             'title' => $this->title,
             'content' => $this->content,
             'created_at' => $this->created_at->toIso8601String(),
-            'banner' => $this->whenLoaded(
+            'media' => $this->whenLoaded(
                 relationship: 'media',
                 value: fn() => MediaResource::make($this->media)
             ),
@@ -31,8 +31,7 @@ class PostResource extends JsonResource
 
         if ($isAdmin) {
             $resource += [
-                'available_at' => $this->available_at->toIso8601String(),
-                'expired_at' => $this->expired_at->toIso8601String(),
+                'month' => $this->month,
                 'user_id' => $this->updated_by,
                 'updated_at' => $this->updated_at->toIso8601String(),
                 'updated_by' => $this->whenLoaded(
