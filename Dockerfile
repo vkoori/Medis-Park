@@ -1,8 +1,10 @@
 ################## php_nginx ##################
-FROM ghcr.io/vkoori/php_nginx:8.4-fpm-alpine3.22 AS php_nginx
+FROM ghcr.io/vkoori/php_nginx:8.4-fpm-alpine3.22 AS base_image
+
+RUN apk add --no-cache redis
 
 ################## builder ##################
-FROM php_nginx AS builder
+FROM base_image AS builder
 
 COPY ./composer.* .
 
