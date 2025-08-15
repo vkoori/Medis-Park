@@ -22,4 +22,5 @@ if ! echo "$JWT_PUBLIC" | base64 -d > "$PUBLIC_KEY_FILE"; then
 fi
 
 chmod 600 "$PRIVATE_KEY_FILE" "$PUBLIC_KEY_FILE"
+chown www-data:www-data "$PRIVATE_KEY_FILE" "$PUBLIC_KEY_FILE"
 echo "JWT keys decoded and saved."
