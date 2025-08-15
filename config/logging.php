@@ -133,6 +133,22 @@ return [
             'replace_placeholders' => true,
             'path' => storage_path('logs/sms.log'),
         ],
+
+        'queue' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/queue.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => env('LOG_DAILY_DAYS', 14),
+            'replace_placeholders' => true,
+        ],
+
+        'cron' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/cron.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => env('LOG_DAILY_DAYS', 14),
+            'replace_placeholders' => true,
+        ],
     ],
 
 ];

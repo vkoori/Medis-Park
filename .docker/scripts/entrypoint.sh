@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-chmod 777 -R /var/www/html/storage
-
 # Run JWT key setup
 /opt/scripts/setup-jwt.sh
 
