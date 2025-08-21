@@ -7,10 +7,10 @@ readonly class UserInfoDto
     public function __construct(
         private string $mobile,
         private ?string $nationalCode,
-        private string $email,
+        private ?string $email,
         private string $firstName,
         private string $lastName,
-        private string $address,
+        private ?string $address,
     ) {}
 
     public function getMobile(): string
