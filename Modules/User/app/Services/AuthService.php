@@ -2,16 +2,16 @@
 
 namespace Modules\User\Services;
 
-use App\Exceptions\NotImplementedException;
 use App\Traits\ClassResolver;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Modules\Notification\Notifications\OtpNotification;
-use Modules\User\Enums\OtpTypeEnum;
-use Modules\User\Enums\UserStatusEnum;
-use Modules\User\Exceptions\AuthExceptions;
 use Modules\User\Models\User;
+use Illuminate\Support\Facades\DB;
+use Modules\User\Enums\OtpTypeEnum;
+use Illuminate\Support\Facades\Hash;
+use Modules\User\Enums\UserStatusEnum;
+use App\Exceptions\NotImplementedException;
+use Modules\User\Exceptions\AuthExceptions;
 use Modules\User\Support\FormattedPhoneNumber;
+use Modules\Notification\Notifications\OtpNotification;
 
 class AuthService
 {
@@ -40,8 +40,10 @@ class AuthService
                 $this->getUserInfoRepository()->insertOrIgnore(values: [
                     'user_id' => $user->id,
                     'national_code' => $crmUserInfo->getNationalCode(),
+                    'email' => $crmUserInfo->getEmail(),
                     'first_name' => $crmUserInfo->getFirstName(),
                     'last_name' => $crmUserInfo->getLastName(),
+                    'address' => $crmUserInfo->getAddress(),
                 ]);
             }
         }

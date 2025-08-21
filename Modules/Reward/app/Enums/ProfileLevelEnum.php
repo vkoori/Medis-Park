@@ -15,9 +15,9 @@ enum ProfileLevelEnum: string
     public function defaultReward(): int
     {
         return match ($this) {
-            self::GOLD => 20,
-            self::SILVER => 14,
-            self::BRONZE => 10,
+            self::GOLD => 300,
+            self::SILVER => 300,
+            self::BRONZE => 0,
         };
     }
 }

@@ -7,8 +7,10 @@ readonly class UserInfoDto
     public function __construct(
         private string $mobile,
         private ?string $nationalCode,
+        private string $email,
         private string $firstName,
         private string $lastName,
+        private string $address,
     ) {}
 
     public function getMobile(): string
@@ -19,6 +21,10 @@ readonly class UserInfoDto
     {
         return $this->nationalCode;
     }
+    public function getEmail()
+    {
+        return $this->email;
+    }
     public function getFirstName(): string
     {
         return $this->firstName;
@@ -26,5 +32,9 @@ readonly class UserInfoDto
     public function getLastName(): string
     {
         return $this->lastName;
+    }
+    public function getAddress()
+    {
+        return $this->address;
     }
 }

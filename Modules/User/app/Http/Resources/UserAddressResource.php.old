@@ -1,0 +1,24 @@
+<?php
+
+namespace Modules\User\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
+
+class UserAddressResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'label' => $this->label,
+            'address' => $this->address,
+            'postal_code' => $this->postal_code,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+        ];
+    }
+}

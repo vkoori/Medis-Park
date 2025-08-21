@@ -40,9 +40,15 @@ class UserInfoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            "national_code" => [new NationalCodeRule()],
+            "national_code" => ['nullable', new NationalCodeRule()],
+            "email" => ['nullable', 'email:rfc'],
             "first_name" => ['required', new SafePersianWordRule(), 'max:255'],
             "last_name" => ['required', new SafePersianWordRule(), 'max:255'],
+            "address" => ['nullable', new SafePersianWordRule(), 'max:500'],
+            // "address_label" => ['nullable', new SafePersianWordRule(), 'max:100'],
+            // "address_postal_code" => ['nullable', 'digits:10'],
+            // "address_lat" => ['nullable', 'numeric', 'between:-90,90'],
+            // "address_long" => ['nullable', 'numeric', 'between:-180,180'],
             "access_token" => ['required', 'string'],
             "issuer" => ['required', 'string'],
         ];

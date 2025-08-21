@@ -24,7 +24,6 @@ class UserInfoService
 
         return $user;
     }
-
     public function getUserInfo(int $userId): ?UserInfo
     {
         return $this->getUserInfoRepository()->first(
@@ -37,11 +36,7 @@ class UserInfoService
         $userInfo = DB::transaction(callback: function () use ($userId, $dto): UserInfo {
             $userInfo = $this->getUserInfoRepository()->updateOrCreate(
                 attributes: ['user_id' => $userId],
-                values: [
-                    "national_code" => $dto->nationalCode,
-                    "first_name" => $dto->firstName,
-                    "last_name" => $dto->lastName,
-                ]
+                values: $dto->getProvidedDataSnakeCase()
             )->loadMissing(['user']);
 
             if ($userInfo->user->status == UserStatusEnum::REGISTERING) {
@@ -57,9 +52,11 @@ class UserInfoService
         event(new UserInfoUpdatedEvent(
             userId: $userId,
             mobile: $userInfo->user->mobile->formatNational(),
+            email: $userInfo->email,
             nationalCode: $userInfo->national_code,
             firstName: $userInfo->first_name,
             lastName: $userInfo->last_name,
+            address: $userInfo->address
         ));
 
         return $userInfo;

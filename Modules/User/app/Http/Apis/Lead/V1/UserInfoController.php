@@ -2,13 +2,13 @@
 
 namespace Modules\User\Http\Apis\Lead\V1;
 
-use App\Utils\Response\SuccessFacade;
-use Illuminate\Support\Facades\Auth;
 use Modules\User\Dto\UserInfoDto;
-use Modules\User\Http\Requests\V1\UserInfo\UserInfoStoreRequest;
-use Modules\User\Http\Resources\UserInfoResource;
+use Illuminate\Support\Facades\Auth;
+use App\Utils\Response\SuccessFacade;
 use Modules\User\Services\AuthService;
 use Modules\User\Services\UserInfoService;
+use Modules\User\Http\Resources\UserInfoResource;
+use Modules\User\Http\Requests\V1\UserInfo\UserInfoStoreRequest;
 
 class UserInfoController
 {
@@ -45,7 +45,7 @@ class UserInfoController
 
         return SuccessFacade::ok(
             data: [
-                'user_info' => $userInfo,
+                'user_info' => UserInfoResource::make($userInfo),
                 'token' => $jwt
             ]
         );

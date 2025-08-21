@@ -1,0 +1,19 @@
+<?php
+
+namespace Modules\User\Repositories;
+
+use Modules\User\Models\UserAddress;
+use App\Utils\Repository\BaseRepository;
+
+/**
+ * @extends BaseRepository<UserAddress>
+ */
+class UserAddressRepository extends BaseRepository
+{
+    public function __construct(private UserAddress $userAddress) {}
+
+    protected function getModel(): UserAddress
+    {
+        return $this->userAddress;
+    }
+}

@@ -16,7 +16,7 @@ class SafePersianWordRule implements ValidationRule
             return;
         }
 
-        if (!preg_match('/^[\p{L}\p{M}\p{N}\s\.\-_\(\)\[\]]+$/u', $value)) {
+        if (!preg_match('/^[\p{L}\p{M}\p{N}\s\.\-_,،\(\)\[\]\?!:;\'"\/\\&]+$/u', $value)) {
             $fail(__(
                 'validation.persian_words',
                 ['attribute' => $attribute]
@@ -24,3 +24,4 @@ class SafePersianWordRule implements ValidationRule
         }
     }
 }
+

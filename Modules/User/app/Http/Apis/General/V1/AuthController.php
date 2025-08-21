@@ -3,11 +3,11 @@
 namespace Modules\User\Http\Apis\General\V1;
 
 use App\Utils\Response\SuccessFacade;
-use Modules\User\Http\Requests\V1\Auth\CheckOtpRequest;
-use Modules\User\Http\Requests\V1\Auth\RefreshRequest;
-use Modules\User\Http\Requests\V1\Auth\UserAccountAccessRequest;
-use Modules\User\Http\Resources\UserResource;
 use Modules\User\Services\AuthService;
+use Modules\User\Http\Resources\UserResource;
+use Modules\User\Http\Requests\V1\Auth\RefreshRequest;
+use Modules\User\Http\Requests\V1\Auth\CheckOtpRequest;
+use Modules\User\Http\Requests\V1\Auth\UserAccountAccessRequest;
 
 class AuthController
 {

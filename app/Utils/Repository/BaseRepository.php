@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Database\Query\Expression;
 
 /**
  * @template T of Model
@@ -55,10 +56,22 @@ abstract class BaseRepository
         return $this->fetchData($conditions, $relations)->first();
     }
 
+    /** @return ?T */
+    public function last(?array $conditions = null, array $relations = [], null|string|Expression $column = null): ?Model
+    {
+        return $this->fetchData($conditions, $relations)->latest($column)->first();
+    }
+
     /** @return T */
     public function firstOrFail(?array $conditions = null, array $relations = []): Model
     {
         return $this->fetchData($conditions, $relations)->firstOrFail();
+    }
+
+    /** @return T */
+    public function lastOrFail(?array $conditions = null, array $relations = [], null|string|Expression $column = null): Model
+    {
+        return $this->fetchData($conditions, $relations)->latest($column)->firstOrFail();
     }
 
     public function count(?array $conditions = null): int

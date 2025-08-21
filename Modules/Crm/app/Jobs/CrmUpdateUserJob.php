@@ -29,8 +29,10 @@ class CrmUpdateUserJob implements ShouldQueue
         $dto = new UserInfoDto(
             mobile: $this->event->getMobile(),
             nationalCode: $this->event->getNationalCode(),
+            email: $this->event->getEmail(),
             firstName: $this->event->getFirstName(),
-            lastName: $this->event->getLastName()
+            lastName: $this->event->getLastName(),
+            address: $this->event->getAddress()
         );
 
         if (!$crmUserInfo) {

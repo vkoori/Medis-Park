@@ -42,6 +42,8 @@ class RewardProfileJob implements ShouldQueue
                     level: $level,
                     userId: $this->event->getUserId()
                 );
+            } else {
+                break;
             }
         }
     }

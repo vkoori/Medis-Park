@@ -7,9 +7,11 @@ readonly class UserInfoUpdatedEvent
     public function __construct(
         private int $userId,
         private string $mobile,
+        private string $email,
         private ?string $nationalCode,
         private string $firstName,
         private string $lastName,
+        private string $address,
     ) {}
 
     public function getUserId(): int
@@ -19,6 +21,10 @@ readonly class UserInfoUpdatedEvent
     public function getMobile(): string
     {
         return $this->mobile;
+    }
+    public function getEmail(): string
+    {
+        return $this->email;
     }
     public function getNationalCode(): ?string
     {
@@ -31,5 +37,9 @@ readonly class UserInfoUpdatedEvent
     public function getLastName(): string
     {
         return $this->lastName;
+    }
+    public function getAddress(): string
+    {
+        return $this->address;
     }
 }
