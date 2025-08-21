@@ -5,6 +5,7 @@ namespace Modules\Reward\Services;
 use App\Traits\ClassResolver;
 use Illuminate\Support\Facades\DB;
 use Modules\Coin\Enums\TransactionReferenceTypeEnum;
+use Modules\Reward\Enums\BonusTypeEnum;
 
 class PostRewardService
 {
@@ -13,8 +14,9 @@ class PostRewardService
     public function seenPost(int $userId)
     {
         DB::transaction(function () use ($userId) {
-            $postReward = $this->getRewardPostRepository()->firstOrFail(
-                relations: ['reward']
+            $postReward = $this->getBonusTypeRepository()->firstOrFail(
+                conditions: ['type' => BonusTypeEnum::POST],
+                relations: ['lastPrice', 'reward']
             );
 
             $userAchievement = $this->getRewardUserUnlockedRepository()->create([
@@ -25,7 +27,7 @@ class PostRewardService
 
             $this->getCoinTransactionService()->transaction(
                 userId: $userId,
-                amount: $postReward->amount,
+                amount: $postReward->lastPrice->amount,
                 reason: __(key: "reward::messages.reward_reason.post"),
                 type: TransactionReferenceTypeEnum::REWARD_UNLOCKED,
                 referenceId: $userAchievement->id

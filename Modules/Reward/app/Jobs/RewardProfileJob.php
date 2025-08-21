@@ -2,15 +2,15 @@
 
 namespace Modules\Reward\Jobs;
 
-use App\Dto\UserInfoUpdatedEvent;
+use Illuminate\Support\Str;
 use App\Traits\ClassResolver;
 use Illuminate\Bus\Queueable;
+use App\Dto\UserInfoUpdatedEvent;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Modules\Reward\Enums\ProfileLevelEnum;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Str;
-use Modules\Reward\Enums\ProfileLevelEnum;
 
 class RewardProfileJob implements ShouldQueue
 {
@@ -23,11 +23,11 @@ class RewardProfileJob implements ShouldQueue
         $unlockedLevels = $this
             ->getProfileRewardService()
             ->getAchievementsOfProfile(userId: $this->event->getUserId())
-            ->pluck('level');
+            ->pluck('sub_type');
 
         // Levels in descending order: BRONZE → SILVER → GOLD
         foreach ([ProfileLevelEnum::BRONZE, ProfileLevelEnum::SILVER, ProfileLevelEnum::GOLD] as $level) {
-            if ($unlockedLevels->contains($level)) {
+            if ($unlockedLevels->contains($level->value)) {
                 continue;
             }
 

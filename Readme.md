@@ -31,7 +31,6 @@ Run following commands:
 php artisan generate:jwt-keys RS256
 php artisan migrate
 php artisan db:seed
-php artisan module:seed Notification
-php artisan module:seed Reward
-php artisan queue:work --queue=sms_product,user,crm,reward
+php artisan module:seed User Notification Reward
+php artisan queue:work --queue=default,user,post,reward,crm,sms_product,sms_advertising 
 ```

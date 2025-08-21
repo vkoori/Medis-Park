@@ -4,40 +4,31 @@ namespace Modules\Reward\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Reward\Models\Reward;
-use Modules\Reward\Models\ProfileField;
+use Modules\Reward\Models\BonusType;
+use Modules\Reward\Enums\BonusTypeEnum;
 use Modules\Reward\Enums\RewardTypeEnum;
-use Modules\Reward\Models\RewardProfile;
-use Modules\Reward\Enums\ProfileFieldEnum;
-use Modules\Reward\Enums\ProfileLevelEnum;
+use Modules\Reward\Models\BonusTypeAmount;
 
 class PostRewardSeeder extends Seeder
 {
     public function run(): void
     {
-        $profileLevels = ProfileLevelEnum::cases();
+        $bonusType = BonusType::query()->firstOrCreate(attributes: [
+            'type' => BonusTypeEnum::POST,
+            'sub_type' => null
+        ]);
 
-        foreach ($profileLevels as $profileLevel) {
-            $rewardProfile = RewardProfile::query()->firstOrCreate(
-                attributes: ['level' => $profileLevel],
-                values: ['amount' => $profileLevel->defaultReward()]
-            );
-
-            Reward::query()->firstOrCreate(
-                attributes: [
-                    'reward_reference_type' => RewardTypeEnum::PROFILE,
-                    'reward_reference_id' => $rewardProfile->id,
-                ],
-                values: []
-            );
+        if ($bonusType->wasRecentlyCreated) {
+            BonusTypeAmount::query()->create(attributes: [
+                'bonus_type_id' => $bonusType->id,
+                'amount' => 20,
+                'created_by' => null,
+            ]);
         }
 
-        $profileFields = ProfileFieldEnum::cases();
-
-        foreach ($profileFields as $profileField) {
-            ProfileField::query()->firstOrCreate(
-                attributes: ['key' => $profileField->value],
-                values: ['level' => $profileField->defaultLevel()]
-            );
-        }
+        Reward::query()->firstOrCreate(attributes: [
+            'reward_reference_type' => RewardTypeEnum::BONUS,
+            'reward_reference_id' => $bonusType->id,
+        ]);
     }
 }

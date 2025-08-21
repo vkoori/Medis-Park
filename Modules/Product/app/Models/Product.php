@@ -7,7 +7,6 @@ use Modules\User\Models\User;
 use Modules\Media\Models\Media;
 use Mews\Purifier\Casts\CleanHtml;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Reward\Models\RewardProduct;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,7 +45,7 @@ class Product extends Model
 
     public function rewardProducts(): HasMany
     {
-        return $this->hasMany(RewardProduct::class);
+        return $this->hasMany(ProductAvailable::class);
     }
 
     public function updatedBy(): BelongsTo

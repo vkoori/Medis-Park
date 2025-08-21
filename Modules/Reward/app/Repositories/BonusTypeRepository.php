@@ -2,29 +2,31 @@
 
 namespace Modules\Reward\Repositories;
 
+use Modules\Reward\Models\BonusType;
+use Modules\Reward\Enums\BonusTypeEnum;
 use App\Utils\Repository\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Modules\Reward\Models\RewardProfile;
 
 /**
- * @extends BaseRepository<RewardProfile>
+ * @extends BaseRepository<BonusType>
  */
-class RewardProfileRepository extends BaseRepository
+class BonusTypeRepository extends BaseRepository
 {
-    public function __construct(private RewardProfile $rewardProfile) {}
+    public function __construct(private BonusType $rewardProfile) {}
 
-    protected function getModel(): RewardProfile
+    protected function getModel(): BonusType
     {
         return $this->rewardProfile;
     }
 
     /**
      * @param int $userId
-     * @return Collection<int, RewardProfile>
+     * @return Collection<int, BonusType>
      */
-    public function getAchievements(int $userId): Collection
+    public function getAchievements(int $userId, BonusTypeEnum $type): Collection
     {
         return $this->getModel()
+            ->where('type', $type)
             ->whereHas('reward.rewardUnlocks', function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             })

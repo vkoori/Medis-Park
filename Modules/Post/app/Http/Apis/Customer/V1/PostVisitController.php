@@ -17,4 +17,12 @@ class PostVisitController
             data: PostCustomerResource::make($post)
         );
     }
+    public function unlockPostByCoin(int $postId, PostVisitService $postVisitService)
+    {
+        $post = $postVisitService->unlockPostByCoin(userId: Auth::id(), postId: $postId);
+
+        return SuccessFacade::ok(
+            data: PostCustomerResource::make($post)
+        );
+    }
 }

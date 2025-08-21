@@ -6,6 +6,8 @@ use App\Traits\Paginatable;
 use Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Reward\Enums\RewardTypeEnum;
+use Modules\Product\Models\CoinAvailable;
+use Modules\Product\Models\ProductAvailable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -37,10 +39,9 @@ class Reward extends Model
         parent::boot();
 
         Relation::morphMap([
-            RewardTypeEnum::MONTHLY_COIN->value => RewardCoin::class,
-            RewardTypeEnum::MONTHLY_PRODUCT->value => RewardProduct::class,
-            RewardTypeEnum::PROFILE->value => RewardProfile::class,
-            RewardTypeEnum::UNLOCK_POST->value => RewardPost::class,
+            RewardTypeEnum::MONTHLY_COIN->value => CoinAvailable::class,
+            RewardTypeEnum::MONTHLY_PRODUCT->value => ProductAvailable::class,
+            RewardTypeEnum::BONUS->value => BonusType::class,
         ]);
     }
 

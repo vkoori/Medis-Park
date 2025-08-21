@@ -4,6 +4,7 @@ namespace Modules\Reward\Services;
 
 use App\Traits\ClassResolver;
 use Illuminate\Support\Facades\DB;
+use Modules\Reward\Enums\BonusTypeEnum;
 use Modules\Reward\Enums\ProfileLevelEnum;
 use Modules\Coin\Enums\TransactionReferenceTypeEnum;
 
@@ -18,15 +19,18 @@ class ProfileRewardService
 
     public function getAchievementsOfProfile(int $userId)
     {
-        return $this->getRewardProfileRepository()->getAchievements(userId: $userId);
+        return $this->getBonusTypeRepository()->getAchievements(userId: $userId, type: BonusTypeEnum::PROFILE);
     }
 
     public function unlockProfile(ProfileLevelEnum $level, int $userId)
     {
         DB::transaction(function () use ($level, $userId) {
-            $profileReward = $this->getRewardProfileRepository()->firstOrFail(
-                conditions: ['level' => $level],
-                relations: ['reward']
+            $profileReward = $this->getBonusTypeRepository()->firstOrFail(
+                conditions: [
+                    'type' => BonusTypeEnum::PROFILE,
+                    'sub_type' => $level
+                ],
+                relations: ['lastPrice', 'reward']
             );
 
             $userAchievement = $this->getRewardUserUnlockedRepository()->create([
@@ -37,7 +41,7 @@ class ProfileRewardService
 
             $this->getCoinTransactionService()->transaction(
                 userId: $userId,
-                amount: $profileReward->amount,
+                amount: $profileReward->lastPrice->amount,
                 reason: __(key: "reward::messages.reward_reason.profile", replace: [
                     'level' => $level->translate()['translate']
                 ]),

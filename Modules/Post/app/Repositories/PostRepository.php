@@ -51,6 +51,20 @@ class PostRepository extends BaseRepository
             ->first();
     }
 
+    public function findPostWithSeen(int $postId, int $userId, array $relations = []): ?Post
+    {
+        return $this->getModel()
+            ->query()
+            ->where('id', $postId)
+            ->withCount([
+                'seen as visited' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }
+            ])
+            ->with($relations)
+            ->first();
+    }
+
     protected function fetchData(?array $conditions, array $relations, ?Builder $query = null): Builder
     {
         $q = $this->getModel()->query();

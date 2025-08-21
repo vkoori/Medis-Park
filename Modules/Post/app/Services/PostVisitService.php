@@ -44,6 +44,23 @@ class PostVisitService
         return $post;
     }
 
+    public function unlockPostByCoin(int $userId, int $postId)
+    {
+        $post = $this->getPostRepository()->findPostWithSeen(
+            postId: $postId,
+            userId: $userId,
+            relations: ['media']
+        );
+
+        if (!$post) {
+            throw PostVisitExceptions::notPostForVisit();
+        }
+
+        if ($post->visited) {
+            throw PostVisitExceptions::alreadySeen();
+        }
+    }
+
     protected function canUserUnlock(int $userId): bool
     {
         $lastUnlockAt = $this->getUserPostVisitRepository()->getLastNormalUnlocked(userId: $userId)?->first_visited_at;

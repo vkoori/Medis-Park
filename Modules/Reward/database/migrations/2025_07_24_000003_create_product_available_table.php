@@ -3,20 +3,19 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Reward\Enums\ProfileLevelEnum;
 
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('reward_profiles', function (Blueprint $table) {
+        Schema::create('product_available', function (Blueprint $table) {
             $table->id();
-            $table->enum('level', ProfileLevelEnum::values());
-            $table->unsignedInteger('amount');
+            $table->string('month')->index()->comment('e.g. "1404-07"');
+            $table->foreignId('product_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('reward_profiles');
+        Schema::dropIfExists('product_available');
     }
 };

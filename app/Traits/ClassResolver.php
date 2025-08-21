@@ -14,11 +14,10 @@ use Modules\User\Repositories\UserOtpRepository;
 use Modules\Coin\Services\CoinTransactionService;
 use Modules\Reward\Services\ProfileRewardService;
 use Modules\User\Repositories\UserInfoRepository;
-use Modules\Reward\Repositories\RewardPostRepository;
 use Modules\Post\Repositories\UserPostVisitRepository;
 use Modules\Reward\Repositories\ProfileFieldRepository;
 use Modules\Coin\Repositories\CoinTransactionRepository;
-use Modules\Reward\Repositories\RewardProfileRepository;
+use Modules\Reward\Repositories\BonusTypeRepository;
 use Modules\Reward\Repositories\RewardUserUnlockedRepository;
 
 trait ClassResolver
@@ -36,9 +35,9 @@ trait ClassResolver
     {
         return app(UserInfoRepository::class);
     }
-    protected function getRewardProfileRepository(): RewardProfileRepository
+    protected function getBonusTypeRepository(): BonusTypeRepository
     {
-        return app(RewardProfileRepository::class);
+        return app(BonusTypeRepository::class);
     }
     protected function getProfileFieldRepository(): ProfileFieldRepository
     {
@@ -63,10 +62,6 @@ trait ClassResolver
     protected function getUserPostVisitRepository(): UserPostVisitRepository
     {
         return app(UserPostVisitRepository::class);
-    }
-    protected function getRewardPostRepository(): RewardPostRepository
-    {
-        return app(RewardPostRepository::class);
     }
     // Services
     protected function getCrmService(): CrmService

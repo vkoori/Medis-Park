@@ -10,6 +10,5 @@ enum RewardTypeEnum: string
 
     case MONTHLY_COIN = 'monthly_coin';
     case MONTHLY_PRODUCT = 'monthly_product';
-    case PROFILE = 'profile';
-    case UNLOCK_POST = 'unlock_post';
+    case BONUS = 'bonus';
 }

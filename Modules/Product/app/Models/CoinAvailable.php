@@ -1,20 +1,22 @@
 <?php
 
-namespace Modules\Reward\Models;
+namespace Modules\Product\Models;
 
 use App\Traits\Paginatable;
+use Modules\Reward\Models\Reward;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class RewardPost extends Model
+class CoinAvailable extends Model
 {
     use Paginatable;
 
-    protected $table = 'reward_posts';
+    protected $table = 'coin_available';
 
     public $timestamps = false;
 
     protected $fillable = [
+        'month',
         'amount',
     ];
 

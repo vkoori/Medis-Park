@@ -2,8 +2,8 @@
 
 return [
     'profileLevelEnum' => [
-        'level1' => 'طلایی',
-        'level2' => 'نقره ای',
-        'level3' => 'برنزی',
+        'gold' => 'طلایی',
+        'silver' => 'نقره ای',
+        'bronze' => 'برنزی',
     ]
 ];
