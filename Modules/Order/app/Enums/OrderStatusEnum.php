@@ -12,4 +12,12 @@ enum OrderStatusEnum: string
     case PENDING = 'pending';
     case PAID = 'paid';
     case FAILED = 'failed';
+
+    public static function completeStatuses()
+    {
+        return [
+            self::REWARDED,
+            self::PAID
+        ];
+    }
 }

@@ -2,15 +2,15 @@
 
 namespace Modules\Product\Services;
 
-use App\Exceptions\NotImplementedException;
-use Illuminate\Support\Facades\DB;
-use Modules\Product\Exceptions\MonthlyItemExceptions;
 use Morilog\Jalali\Jalalian;
 use App\Traits\ClassResolver;
+use Illuminate\Support\Facades\DB;
 use Modules\Product\Dto\MonthlyCoinDto;
 use Modules\Product\Models\CoinAvailable;
+use App\Exceptions\NotImplementedException;
 use Modules\Product\Dto\MonthlyComponentDto;
 use Modules\Product\Models\ProductAvailable;
+use Modules\Product\Exceptions\MonthlyItemExceptions;
 
 class MonthlyItemService
 {
@@ -34,13 +34,24 @@ class MonthlyItemService
         ]);
     }
 
-    public function getMonthlyItems(int $jYear, int $jMonth)
+    public function getMonthlyItemsForAdmin(int $jYear, int $jMonth)
     {
         $month = (new Jalalian(year: $jYear, month: $jMonth, day: 1))->format(format: 'Y-m');
 
         return $this->getMonthlyItemRepository()->getMonthly(
             jMonth: $month,
-            relations: ['product.lastPrice']
+            relations: ['product.lastPrice', 'product.media']
+        );
+    }
+
+    public function getMonthlyItemsForCustomer(int $jYear, int $jMonth, int $userId)
+    {
+        $month = (new Jalalian(year: $jYear, month: $jMonth, day: 1))->format(format: 'Y-m');
+
+        return $this->getMonthlyItemRepository()->getMonthlyOfCustomer(
+            jMonth: $month,
+            userId: $userId,
+            relations: ['product.lastPrice', 'product.media']
         );
     }
 

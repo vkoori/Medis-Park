@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Media\Http\Resources\MediaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ComponentAdminResource extends JsonResource
+class ComponentResource extends JsonResource
 {
     public function toArray(Request $request)
     {
@@ -19,7 +19,7 @@ class ComponentAdminResource extends JsonResource
                 relationship: 'media',
                 value: fn() => MediaResource::make($this->media)
             ),
-            'lastPrice' => $this->whenLoaded(
+            'last_price' => $this->whenLoaded(
                 relationship: 'lastPrice',
                 value: fn() => $this->lastPrice->coin_value
             ),

@@ -35,7 +35,7 @@ class MonthlyItemController
 
     public function index(int $jYear, int $jMonth, MonthlyItemService $monthlyItemService)
     {
-        $items = $monthlyItemService->getMonthlyItems(jYear: $jYear, jMonth: $jMonth);
+        $items = $monthlyItemService->getMonthlyItemsForAdmin(jYear: $jYear, jMonth: $jMonth);
 
         return SuccessFacade::ok(data: MonthlyItemResource::collection($items));
     }
