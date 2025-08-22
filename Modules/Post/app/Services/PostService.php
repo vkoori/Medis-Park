@@ -2,14 +2,13 @@
 
 namespace Modules\Post\Services;
 
+use Morilog\Jalali\Jalalian;
 use App\Traits\ClassResolver;
-use Illuminate\Support\Facades\DB;
 use Modules\Post\Models\Post;
 use Modules\User\Models\User;
 use Modules\Post\Dto\PostSaveDto;
 use Modules\Post\Dto\PostFilterDto;
 use Modules\Post\Exceptions\PostExceptions;
-use Morilog\Jalali\Jalalian;
 
 class PostService
 {
@@ -31,14 +30,20 @@ class PostService
             throw PostExceptions::postsIsFull();
         }
 
-        $media = $this->getMediaService()->upload(
-            file: $dto->media,
-            disk: $dto->disk
-        );
+        $media = null;
+        if (
+            $dto->hasField(propertyName: 'disk')
+            && $dto->hasField(propertyName: 'media')
+        ) {
+            $media = $this->getMediaService()->upload(
+                file: $dto->media,
+                disk: $dto->disk
+            );
+        }
 
         return $this->getPostRepository()
             ->create(attributes: [
-                'media_id' => $media->id,
+                'media_id' => $media?->id,
                 'title' => $dto->title,
                 'content' => $dto->content,
                 'month' => $month->format('Y-m'),

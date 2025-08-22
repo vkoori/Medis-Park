@@ -11,17 +11,19 @@ use Modules\Product\Services\ProductService;
 use Modules\Post\Repositories\PostRepository;
 use Modules\User\Repositories\UserRepository;
 use Modules\Reward\Services\PostRewardService;
-use Modules\Order\Repositories\OrderRepository;
 use Modules\Media\Repositories\MediaRepository;
+use Modules\Order\Repositories\OrderRepository;
 use Modules\User\Repositories\UserOtpRepository;
 use Modules\Coin\Services\CoinTransactionService;
 use Modules\Reward\Services\ProfileRewardService;
 use Modules\User\Repositories\UserInfoRepository;
+use Modules\Product\Repositories\ProductRepository;
 use Modules\Reward\Repositories\BonusTypeRepository;
 use Modules\Product\Repositories\PostPriceRepository;
 use Modules\Post\Repositories\UserPostVisitRepository;
 use Modules\Reward\Repositories\ProfileFieldRepository;
 use Modules\Coin\Repositories\CoinTransactionRepository;
+use Modules\Product\Repositories\ProductPriceRepository;
 use Modules\Reward\Repositories\RewardUserUnlockedRepository;
 
 trait ClassResolver
@@ -74,6 +76,14 @@ trait ClassResolver
     protected function getOrderRepository(): OrderRepository
     {
         return app(OrderRepository::class);
+    }
+    protected function getProductRepository(): ProductRepository
+    {
+        return app(ProductRepository::class);
+    }
+    protected function getProductPriceRepository(): ProductPriceRepository
+    {
+        return app(ProductPriceRepository::class);
     }
     // Services
     protected function getCrmService(): CrmService

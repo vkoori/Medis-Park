@@ -8,8 +8,8 @@ use Illuminate\Http\UploadedFile;
 
 class PostSaveDto extends BaseDto
 {
-    public readonly string $disk;
-    public readonly UploadedFile $media;
+    public readonly ?string $disk;
+    public readonly ?UploadedFile $media;
     public readonly string $title;
     public readonly string $content;
     public readonly string $jYearMonth;

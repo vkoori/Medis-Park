@@ -20,6 +20,7 @@ class ProductAvailable extends Model
     protected $fillable = [
         'month',
         'product_id',
+        'ordering'
     ];
 
     public function product(): BelongsTo

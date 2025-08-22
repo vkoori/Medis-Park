@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('month')->index()->comment('e.g. "1404-07"');
             $table->unsignedInteger('amount');
+            $table->unsignedSmallInteger('ordering');
         });
     }
 

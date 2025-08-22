@@ -18,6 +18,7 @@ class CoinAvailable extends Model
     protected $fillable = [
         'month',
         'amount',
+        'ordering'
     ];
 
     public function reward(): MorphOne
