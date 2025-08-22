@@ -13,7 +13,7 @@ class OrderService
 
     public function buyPost(int $userId, int $postId): void
     {
-        $amount = $this->getProductService()->getPostPrice();
+        $amount = $this->getPostPriceService()->getLastPostPrice();
 
         DB::transaction(function () use ($userId, $postId, $amount) {
             $order = $this->getOrderRepository()->create(attributes: [

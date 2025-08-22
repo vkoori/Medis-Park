@@ -5,13 +5,13 @@ namespace Modules\Post\Services;
 use Carbon\Carbon;
 use App\Dto\PostSeenEvent;
 use Carbon\CarbonTimeZone;
+use Morilog\Jalali\Jalalian;
 use App\Traits\ClassResolver;
-use Illuminate\Support\Facades\DB;
 use Modules\Post\Models\Post;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Date;
 use Modules\Post\Enums\UserPostVisitEnum;
 use Modules\Post\Exceptions\PostVisitExceptions;
-use Morilog\Jalali\Jalalian;
 
 class PostVisitService
 {

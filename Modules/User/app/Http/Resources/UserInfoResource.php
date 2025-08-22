@@ -12,7 +12,7 @@ class UserInfoResource extends JsonResource
         /** @var array $mobile */
         $mobile = $this->whenLoaded(
             'user',
-            ['mobile' => (string) $this->user->mobile],
+            ['mobile' => fn() => (string) $this->user->mobile],
             []
         );
         return [

@@ -7,9 +7,10 @@ use Modules\Media\Services\MediaService;
 use Modules\Order\Services\OrderService;
 use Modules\User\Services\UserInfoService;
 use Modules\Post\Services\PostVisitService;
-use Modules\Product\Services\ProductService;
 use Modules\Post\Repositories\PostRepository;
 use Modules\User\Repositories\UserRepository;
+use Modules\Product\Services\ComponentService;
+use Modules\Product\Services\PostPriceService;
 use Modules\Reward\Services\PostRewardService;
 use Modules\Media\Repositories\MediaRepository;
 use Modules\Order\Repositories\OrderRepository;
@@ -21,9 +22,12 @@ use Modules\Product\Repositories\ProductRepository;
 use Modules\Reward\Repositories\BonusTypeRepository;
 use Modules\Product\Repositories\PostPriceRepository;
 use Modules\Post\Repositories\UserPostVisitRepository;
+use Modules\Product\Repositories\MonthlyItemRepository;
 use Modules\Reward\Repositories\ProfileFieldRepository;
 use Modules\Coin\Repositories\CoinTransactionRepository;
 use Modules\Product\Repositories\ProductPriceRepository;
+use Modules\Product\Repositories\CoinAvailableRepository;
+use Modules\Product\Repositories\ProductAvailableRepository;
 use Modules\Reward\Repositories\RewardUserUnlockedRepository;
 
 trait ClassResolver
@@ -85,6 +89,18 @@ trait ClassResolver
     {
         return app(ProductPriceRepository::class);
     }
+    protected function getProductAvailableRepository(): ProductAvailableRepository
+    {
+        return app(ProductAvailableRepository::class);
+    }
+    protected function getCoinAvailableRepository(): CoinAvailableRepository
+    {
+        return app(CoinAvailableRepository::class);
+    }
+    protected function getMonthlyItemRepository(): MonthlyItemRepository
+    {
+        return app(MonthlyItemRepository::class);
+    }
     // Services
     protected function getCrmService(): CrmService
     {
@@ -114,12 +130,16 @@ trait ClassResolver
     {
         return app(PostRewardService::class);
     }
-    protected function getProductService(): ProductService
+    protected function getProductService(): ComponentService
     {
-        return app(ProductService::class);
+        return app(ComponentService::class);
     }
     protected function getOrderService(): OrderService
     {
         return app(OrderService::class);
+    }
+    protected function getPostPriceService(): PostPriceService
+    {
+        return app(PostPriceService::class);
     }
 }
