@@ -11,8 +11,11 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
-            $table->foreignId('product_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->foreignId('product_id')->nullable()->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->foreignId('coin_id')->nullable()->constrained('coin_available')->restrictOnDelete()->restrictOnUpdate();
+            $table->foreignId('post_id')->nullable()->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->enum('status', OrderStatusEnum::values());
+            $table->unsignedBigInteger('coin_value');
             $table->timestamp('used_at')->nullable();
             $table->timestamps();
         });

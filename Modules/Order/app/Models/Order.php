@@ -3,6 +3,8 @@
 namespace Modules\Order\Models;
 
 use App\Traits\Paginatable;
+use Modules\Post\Models\Post;
+use Modules\Product\Models\CoinAvailable;
 use Modules\User\Models\User;
 use Modules\Product\Models\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +22,10 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'coin_id',
+        'post_id',
         'status',
+        'coin_value',
         'used_at',
     ];
 
@@ -37,6 +42,16 @@ class Order extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function coinAvailable(): BelongsTo
+    {
+        return $this->belongsTo(CoinAvailable::class, 'coin_id');
+    }
+
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(Post::class);
     }
 
     public function coinTransactions(): MorphMany

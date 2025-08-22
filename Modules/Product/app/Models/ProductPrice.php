@@ -17,11 +17,6 @@ class ProductPrice extends Model
     protected $fillable = [
         'product_id',
         'coin_value',
-        'created_at',
-    ];
-
-    protected $casts = [
-        'coin_value' => 'integer',
     ];
 
     public function product(): BelongsTo

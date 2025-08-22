@@ -4,20 +4,24 @@ namespace App\Traits;
 
 use Modules\Crm\Services\CrmService;
 use Modules\Media\Services\MediaService;
+use Modules\Order\Services\OrderService;
 use Modules\User\Services\UserInfoService;
 use Modules\Post\Services\PostVisitService;
+use Modules\Product\Services\ProductService;
 use Modules\Post\Repositories\PostRepository;
 use Modules\User\Repositories\UserRepository;
 use Modules\Reward\Services\PostRewardService;
+use Modules\Order\Repositories\OrderRepository;
 use Modules\Media\Repositories\MediaRepository;
 use Modules\User\Repositories\UserOtpRepository;
 use Modules\Coin\Services\CoinTransactionService;
 use Modules\Reward\Services\ProfileRewardService;
 use Modules\User\Repositories\UserInfoRepository;
+use Modules\Reward\Repositories\BonusTypeRepository;
+use Modules\Product\Repositories\PostPriceRepository;
 use Modules\Post\Repositories\UserPostVisitRepository;
 use Modules\Reward\Repositories\ProfileFieldRepository;
 use Modules\Coin\Repositories\CoinTransactionRepository;
-use Modules\Reward\Repositories\BonusTypeRepository;
 use Modules\Reward\Repositories\RewardUserUnlockedRepository;
 
 trait ClassResolver
@@ -63,6 +67,14 @@ trait ClassResolver
     {
         return app(UserPostVisitRepository::class);
     }
+    protected function getPostPriceRepository(): PostPriceRepository
+    {
+        return app(PostPriceRepository::class);
+    }
+    protected function getOrderRepository(): OrderRepository
+    {
+        return app(OrderRepository::class);
+    }
     // Services
     protected function getCrmService(): CrmService
     {
@@ -91,5 +103,13 @@ trait ClassResolver
     protected function getPostRewardService(): PostRewardService
     {
         return app(PostRewardService::class);
+    }
+    protected function getProductService(): ProductService
+    {
+        return app(ProductService::class);
+    }
+    protected function getOrderService(): OrderService
+    {
+        return app(OrderService::class);
     }
 }

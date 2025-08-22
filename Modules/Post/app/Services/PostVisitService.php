@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Dto\PostSeenEvent;
 use Carbon\CarbonTimeZone;
 use App\Traits\ClassResolver;
+use Illuminate\Support\Facades\DB;
 use Modules\Post\Models\Post;
 use Illuminate\Support\Facades\Date;
 use Modules\Post\Enums\UserPostVisitEnum;
@@ -59,6 +60,19 @@ class PostVisitService
         if ($post->visited) {
             throw PostVisitExceptions::alreadySeen();
         }
+
+        DB::transaction(function () use ($post, $userId) {
+            $this->getOrderService()->buyPost(userId: $userId, postId: $post->id);
+
+            $this->getUserPostVisitRepository()->create(attributes: [
+                'user_id' => $userId,
+                'post_id' => $post->id,
+                'type' => UserPostVisitEnum::ORDER,
+            ]);
+            $post->visited = 1;
+        });
+
+        return $post;
     }
 
     protected function canUserUnlock(int $userId): bool
