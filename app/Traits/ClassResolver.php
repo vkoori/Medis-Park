@@ -9,7 +9,7 @@ use Modules\User\Services\UserInfoService;
 use Modules\Post\Services\PostVisitService;
 use Modules\Post\Repositories\PostRepository;
 use Modules\User\Repositories\UserRepository;
-use Modules\Product\Services\ComponentService;
+use Modules\Product\Services\ProductService;
 use Modules\Product\Services\PostPriceService;
 use Modules\Reward\Services\PostRewardService;
 use Modules\Media\Repositories\MediaRepository;
@@ -89,18 +89,6 @@ trait ClassResolver
     {
         return app(ProductPriceRepository::class);
     }
-    protected function getProductAvailableRepository(): ProductAvailableRepository
-    {
-        return app(ProductAvailableRepository::class);
-    }
-    protected function getCoinAvailableRepository(): CoinAvailableRepository
-    {
-        return app(CoinAvailableRepository::class);
-    }
-    protected function getMonthlyItemRepository(): MonthlyItemRepository
-    {
-        return app(MonthlyItemRepository::class);
-    }
     // Services
     protected function getCrmService(): CrmService
     {
@@ -130,9 +118,9 @@ trait ClassResolver
     {
         return app(PostRewardService::class);
     }
-    protected function getProductService(): ComponentService
+    protected function getProductService(): ProductService
     {
-        return app(ComponentService::class);
+        return app(ProductService::class);
     }
     protected function getOrderService(): OrderService
     {

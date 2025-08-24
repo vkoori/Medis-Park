@@ -5,6 +5,8 @@ namespace Modules\Product\Models;
 use App\Traits\Paginatable;
 use Modules\User\Models\User;
 use Modules\Media\Models\Media;
+use Modules\Order\Models\Order;
+use Modules\Reward\Models\Prize;
 use Mews\Purifier\Casts\CleanHtml;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -33,6 +35,11 @@ class Product extends Model
         return $this->belongsTo(Media::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class);
@@ -43,13 +50,13 @@ class Product extends Model
         return $this->hasOne(ProductPrice::class)->latest();
     }
 
-    public function rewardProducts(): HasMany
-    {
-        return $this->hasMany(ProductAvailable::class);
-    }
-
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function prize()
+    {
+        return $this->morphOne(Prize::class, 'prizeable', 'type', 'prize_reference_id');
     }
 }

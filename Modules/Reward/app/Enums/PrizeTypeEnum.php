@@ -4,10 +4,10 @@ namespace Modules\Reward\Enums;
 
 use App\Utils\Enum\EnumContract;
 
-enum RewardTypeEnum: string
+enum PrizeTypeEnum: string
 {
     use EnumContract;
 
-    case PRIZE = 'prize';
-    case BONUS = 'bonus';
+    case PRODUCT = 'product';
+    case COIN = 'coin';
 }

@@ -4,12 +4,12 @@ namespace Modules\Product\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ComponentFilterRequest extends FormRequest
+class ProductPriceRequest extends FormRequest
 {
     public function rules()
     {
         return [
-            'title' => ['nullable', 'string', 'max:100']
+            'coin_value' => ['required', 'integer']
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace Modules\Product\Dto;
 use App\Utils\Dto\BaseDto;
 use Illuminate\Http\UploadedFile;
 
-class ComponentSaveDto extends BaseDto
+class ProductSaveDto extends BaseDto
 {
     public readonly ?string $disk;
     public readonly ?UploadedFile $media;

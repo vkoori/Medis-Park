@@ -5,15 +5,15 @@ namespace Modules\Product\Services;
 use App\Traits\ClassResolver;
 use Illuminate\Support\Facades\DB;
 use Modules\Product\Models\Product;
-use Modules\Product\Dto\ComponentSaveDto;
-use Modules\Product\Dto\ComponentFilterDto;
+use Modules\Product\Dto\ProductSaveDto;
+use Modules\Product\Dto\ProductFilterDto;
 use Modules\Product\Exceptions\ProductExceptions;
 
-class ComponentService
+class ProductService
 {
     use ClassResolver;
 
-    public function saveProductWithPrice(ComponentSaveDto $dto, int $userId): Product
+    public function saveProductWithPrice(ProductSaveDto $dto, int $userId): Product
     {
         return DB::transaction(function () use ($dto, $userId): Product {
             $media = null;
@@ -48,10 +48,19 @@ class ComponentService
         });
     }
 
-    public function paginate(ComponentFilterDto $dto)
+    public function paginate(ProductFilterDto $dto)
     {
         return $this->getProductRepository()->paginate(
             relations: ['lastPrice'],
+            conditions: $dto->getProvidedDataSnakeCase()
+        );
+    }
+
+    public function paginateCustomer(ProductFilterDto $dto, int $customerUserId)
+    {
+        return $this->getProductRepository()->paginateCustomer(
+            userId: $customerUserId,
+            relations: ['lastPrice', 'media'],
             conditions: $dto->getProvidedDataSnakeCase()
         );
     }

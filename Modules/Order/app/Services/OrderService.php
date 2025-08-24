@@ -19,7 +19,6 @@ class OrderService
             $order = $this->getOrderRepository()->create(attributes: [
                 'user_id' => $userId,
                 'product_id' => null,
-                'coin_id' => null,
                 'post_id' => $postId,
                 'status' => OrderStatusEnum::PAID,
                 'coin_value' => $amount,

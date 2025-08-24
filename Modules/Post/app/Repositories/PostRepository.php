@@ -67,7 +67,7 @@ class PostRepository extends BaseRepository
 
     protected function fetchData(?array $conditions, array $relations, ?Builder $query = null): Builder
     {
-        $q = $this->getModel()->query();
+        $q = $query ?: $this->getModel()->query();
 
         if (isset($conditions['title'])) {
             $q->whereLike('title', "%{$conditions['title']}%");

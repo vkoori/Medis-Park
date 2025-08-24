@@ -7,5 +7,6 @@
     "Post": true,
     "Media": true,
     "Notification": true,
-    "Crm": true
+    "Crm": true,
+    "Prize": true
 }

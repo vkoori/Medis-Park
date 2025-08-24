@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0c5aed860c570a3ca01833689bc17bf",
+    "content-hash": "59d5e3a48b5e3a03e36fe052f547fe4a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -9797,6 +9797,54 @@
                 }
             ],
             "time": "2024-03-03T12:36:25+00:00"
+        },
+        {
+            "name": "tomasvotruba/class-leak",
+            "version": "2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TomasVotruba/class-leak.git",
+                "reference": "34af3c2b91b560dd54f4bba1e09cec588d7933a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TomasVotruba/class-leak/zipball/34af3c2b91b560dd54f4bba1e09cec588d7933a1",
+                "reference": "34af3c2b91b560dd54f4bba1e09cec588d7933a1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "bin": [
+                "bin/class-leak",
+                "bin/class-leak.php"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TomasVotruba\\ClassLeak\\": "app"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Detect leaking classes",
+            "support": {
+                "issues": "https://github.com/TomasVotruba/class-leak/issues",
+                "source": "https://github.com/TomasVotruba/class-leak/tree/2.0.5"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/rectorphp",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-04-14T20:38:46+00:00"
         }
     ],
     "aliases": [],

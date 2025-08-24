@@ -5,7 +5,7 @@ namespace Modules\Product\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
 
-class ComponentPriceResource extends JsonResource
+class ProductPriceResource extends JsonResource
 {
     public function toArray(Request $request)
     {

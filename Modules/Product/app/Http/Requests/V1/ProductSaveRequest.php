@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Media\Enums\UploadableDiskEnum;
 
-class ComponentSaveRequest extends FormRequest
+class ProductSaveRequest extends FormRequest
 {
     public function rules()
     {

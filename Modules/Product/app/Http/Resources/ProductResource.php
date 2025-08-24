@@ -6,15 +6,18 @@ use Illuminate\Http\Request;
 use Modules\Media\Http\Resources\MediaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ComponentResource extends JsonResource
+class ProductResource extends JsonResource
 {
     public function toArray(Request $request)
     {
+        $purchased = is_int($this->purchased) ? ['purchased' => $this->purchased > 0] : [];
+
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
             'media_id' => $this->media_id,
+            ...$purchased,
             'media' => $this->whenLoaded(
                 relationship: 'media',
                 value: fn() => MediaResource::make($this->media)
@@ -25,7 +28,7 @@ class ComponentResource extends JsonResource
             ),
             'prices' => $this->whenLoaded(
                 relationship: 'prices',
-                value: fn() => ComponentPriceResource::collection($this->prices)
+                value: fn() => ProductPriceResource::collection($this->prices)
             )
         ];
     }
