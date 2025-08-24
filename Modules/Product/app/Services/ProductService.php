@@ -65,11 +65,11 @@ class ProductService
         );
     }
 
-    public function show(int $productId): Product
+    public function show(int $productId, $relations = ['media', 'prices']): Product
     {
         $product = $this->getProductRepository()->findById(
             modelId: $productId,
-            relations: ['media', 'prices']
+            relations: $relations
         );
 
         if (!$product) {

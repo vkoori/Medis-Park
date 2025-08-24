@@ -7,19 +7,21 @@ use Modules\Media\Services\MediaService;
 use Modules\Order\Services\OrderService;
 use Modules\User\Services\UserInfoService;
 use Modules\Post\Services\PostVisitService;
+use Modules\Product\Services\ProductService;
 use Modules\Post\Repositories\PostRepository;
 use Modules\User\Repositories\UserRepository;
-use Modules\Product\Services\ProductService;
 use Modules\Product\Services\PostPriceService;
 use Modules\Reward\Services\PostRewardService;
 use Modules\Media\Repositories\MediaRepository;
 use Modules\Order\Repositories\OrderRepository;
+use Modules\Reward\Repositories\PrizeRepository;
 use Modules\User\Repositories\UserOtpRepository;
 use Modules\Coin\Services\CoinTransactionService;
 use Modules\Reward\Services\ProfileRewardService;
 use Modules\User\Repositories\UserInfoRepository;
 use Modules\Product\Repositories\ProductRepository;
 use Modules\Reward\Repositories\BonusTypeRepository;
+use Modules\Reward\Repositories\PrizeCoinRepository;
 use Modules\Product\Repositories\PostPriceRepository;
 use Modules\Post\Repositories\UserPostVisitRepository;
 use Modules\Product\Repositories\MonthlyItemRepository;
@@ -88,6 +90,14 @@ trait ClassResolver
     protected function getProductPriceRepository(): ProductPriceRepository
     {
         return app(ProductPriceRepository::class);
+    }
+    protected function getPrizeRepository(): PrizeRepository
+    {
+        return app(PrizeRepository::class);
+    }
+    protected function getPrizeCoinRepository(): PrizeCoinRepository
+    {
+        return app(PrizeCoinRepository::class);
     }
     // Services
     protected function getCrmService(): CrmService

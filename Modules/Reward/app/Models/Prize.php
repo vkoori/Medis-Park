@@ -20,14 +20,17 @@ class Prize extends Model
         'month',
         'ordering',
     ];
+    protected $casts = [
+        'type' => PrizeTypeEnum::class,
+    ];
 
     protected static function boot()
     {
         parent::boot();
 
         Relation::morphMap([
-            PrizeTypeEnum::COIN    => PrizeCoin::class,
-            PrizeTypeEnum::PRODUCT => Product::class,
+            PrizeTypeEnum::COIN->value    => PrizeCoin::class,
+            PrizeTypeEnum::PRODUCT->value => Product::class,
         ]);
     }
 

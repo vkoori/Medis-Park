@@ -2,10 +2,10 @@
 
 namespace Modules\Coin\Http\Apis\V1\Customer;
 
-use App\Utils\Response\SuccessFacade;
 use Illuminate\Support\Facades\Auth;
-use Modules\Coin\Http\Resources\V1\TransactionResource;
+use App\Utils\Response\SuccessFacade;
 use Modules\Coin\Services\CoinTransactionService;
+use Modules\Coin\Http\Resources\V1\TransactionResource;
 
 class CoinController
 {
