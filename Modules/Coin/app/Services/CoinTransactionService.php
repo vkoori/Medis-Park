@@ -49,8 +49,15 @@ class CoinTransactionService
         ]);
     }
 
-    public function getUserBalance(int $userId)
+    public function getUserBalance(int $userId): int
     {
         return $this->getCoinTransactionRepository()->getBalance(userId: $userId);
+    }
+
+    public function getUserTransactions(int $userId)
+    {
+        return $this->getCoinTransactionRepository()->get(
+            conditions: ['user_id' => $userId]
+        );
     }
 }
