@@ -14,7 +14,7 @@ class UserResource extends JsonResource
             'mobile' => (string) $this->mobile,
             'status' => $this->status,
             'created_at' => $this->created_at->toIso8601String(),
-            // 'info' => $this->whenLoaded('info', fn() => UserInfoResource::make($this->info)),
+            'info' => $this->whenLoaded('info', fn() => UserInfoResource::make($this->info)),
             // 'addresses' => $this->whenLoaded('addresses', fn() => UserAddressResource::collection($this->addresses))
         ];
     }

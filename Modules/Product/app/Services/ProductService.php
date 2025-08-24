@@ -86,4 +86,18 @@ class ProductService
             'coin_value' => $coinValue,
         ]);
     }
+
+    public function getLastPrice(int $productId): int
+    {
+        $product = $this->getProductRepository()->findById(
+            modelId: $productId,
+            relations: ['lastPrice']
+        );
+
+        if (!$product) {
+            throw ProductExceptions::notFound();
+        }
+
+        return $product->lastPrice->coin_value;
+    }
 }

@@ -32,7 +32,7 @@ class CoinTransactionService
         if ($amount < 0) {
             Cache::lock("user:{$userId}:transaction", 15)
                 ->block(10, function () use ($userId, $amount) {
-                    $balance = $this->getCoinTransactionRepository()->getBalance(userId: $userId);
+                    $balance = $this->getUserBalance(userId: $userId);
                     if ($balance < abs($amount)) {
                         throw TransactionExceptions::dontHaveEnoughCoins();
                     }
@@ -47,5 +47,10 @@ class CoinTransactionService
             'reference_id' => $referenceId,
             'status' => $status,
         ]);
+    }
+
+    public function getUserBalance(int $userId)
+    {
+        return $this->getCoinTransactionRepository()->getBalance(userId: $userId);
     }
 }
