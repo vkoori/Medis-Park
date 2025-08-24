@@ -17,6 +17,7 @@ use Modules\Order\Repositories\OrderRepository;
 use Modules\Reward\Repositories\PrizeRepository;
 use Modules\User\Repositories\UserOtpRepository;
 use Modules\Coin\Services\CoinTransactionService;
+use Modules\Reward\Repositories\RewardRepository;
 use Modules\Reward\Services\ProfileRewardService;
 use Modules\User\Repositories\UserInfoRepository;
 use Modules\Product\Repositories\ProductRepository;
@@ -24,6 +25,7 @@ use Modules\Reward\Repositories\BonusTypeRepository;
 use Modules\Reward\Repositories\PrizeCoinRepository;
 use Modules\Product\Repositories\PostPriceRepository;
 use Modules\Post\Repositories\UserPostVisitRepository;
+use Modules\Reward\Repositories\PrizeUnlockRepository;
 use Modules\Product\Repositories\MonthlyItemRepository;
 use Modules\Reward\Repositories\ProfileFieldRepository;
 use Modules\Coin\Repositories\CoinTransactionRepository;
@@ -98,6 +100,14 @@ trait ClassResolver
     protected function getPrizeCoinRepository(): PrizeCoinRepository
     {
         return app(PrizeCoinRepository::class);
+    }
+    protected function getPrizeUnlockRepository(): PrizeUnlockRepository
+    {
+        return app(PrizeUnlockRepository::class);
+    }
+    protected function getRewardRepository(): RewardRepository
+    {
+        return app(RewardRepository::class);
     }
     // Services
     protected function getCrmService(): CrmService

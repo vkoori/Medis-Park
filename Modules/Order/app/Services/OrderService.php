@@ -67,6 +67,22 @@ class OrderService
         });
     }
 
+    public function rewardProduct(int $userId, int $productId): void
+    {
+        $alreadyBuy = $this->getOrderRepository()->hasUnusedProduct(userId: $userId, productId: $productId);
+
+        if (!$alreadyBuy) {
+            $this->getOrderRepository()->create(attributes: [
+                'user_id' => $userId,
+                'product_id' => $productId,
+                'post_id' => null,
+                'status' => OrderStatusEnum::REWARDED,
+                'coin_value' => 0,
+                'used_at' => null,
+            ]);
+        }
+    }
+
     public function paginate(OrderFilterDto $dto)
     {
         $conditions = [];

@@ -2,14 +2,11 @@
 
 namespace Modules\Post\Services;
 
-use Carbon\Carbon;
 use App\Dto\PostSeenEvent;
-use Carbon\CarbonTimeZone;
 use Morilog\Jalali\Jalalian;
 use App\Traits\ClassResolver;
 use Modules\Post\Models\Post;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Date;
 use Modules\Post\Enums\UserPostVisitEnum;
 use Modules\Post\Exceptions\PostVisitExceptions;
 
@@ -73,36 +70,5 @@ class PostVisitService
         });
 
         return $post;
-    }
-
-    protected function canUserUnlock(int $userId): bool
-    {
-        $lastUnlockAt = $this->getUserPostVisitRepository()->getLastNormalUnlocked(userId: $userId)?->first_visited_at;
-        $currentCycleStart = $this->getStartOfCurrentCycle();
-
-        return is_null($lastUnlockAt) || $lastUnlockAt->lt($currentCycleStart);
-    }
-
-    protected function getStartOfCurrentCycle(): Carbon
-    {
-        $resetTime = config(key: 'post.daily_reset_time');
-        $resetTimezone = config(key: 'post.daily_reset_timezone');
-        $tz = new CarbonTimeZone(timezone: $resetTimezone);
-
-        $now = Date::now(timezone: $tz);
-
-        $todayReset = Date::createFromFormat(
-            format: 'H:i',
-            time: $resetTime,
-            timezone: $tz
-        )->setDate(
-            year: $now->year,
-            month: $now->month,
-            day: $now->day
-        );
-
-        return $now->lt(date: $todayReset)
-            ? $todayReset->copy()->subDay()
-            : $todayReset;
     }
 }

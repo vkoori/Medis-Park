@@ -3,6 +3,7 @@
 namespace Modules\Reward\Models;
 
 use App\Traits\Paginatable;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Modules\Product\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Reward\Enums\PrizeTypeEnum;
@@ -42,5 +43,10 @@ class Prize extends Model
     public function prizeUnlocks()
     {
         return $this->hasMany(PrizeUnlock::class);
+    }
+
+    public function reward(): MorphOne
+    {
+        return $this->morphOne(Reward::class, 'rewardable', 'reward_reference_type', 'reward_reference_id');
     }
 }

@@ -5,6 +5,7 @@ namespace Modules\Reward\Models;
 use App\Traits\Paginatable;
 use Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Reward\Enums\PrizeUnlockTypeEnum;
 
 class PrizeUnlock extends Model
 {
@@ -17,6 +18,9 @@ class PrizeUnlock extends Model
         'prize_id',
         'type',
         'user_id',
+    ];
+    protected $casts = [
+        'type' => PrizeUnlockTypeEnum::class,
     ];
 
     public function prize()
